@@ -48,7 +48,7 @@ export function ServicesSection() {
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">Müşteri Deneyimi</h3>
             <p className="text-gray-300 mb-6">
-              AI destekli chatbot'lar ve kişiselleştirme ile müşteri memnuniyetini artırın.
+AI destekli chatbot&apos;lar ve kişiselleştirme ile müşteri memnuniyetini artırın.
             </p>
           </div>
         </div>
