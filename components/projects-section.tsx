@@ -38,14 +38,14 @@ export function ProjectsSection() {
               </h4>
               <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-3 md:mb-4">
                 ChatEKG, acil servis ve klinik ortamlarda EKG yorumlama sürecini hızlandırmak ve standartlaştırmak için
-                geliştirilen yapay zeka tabanlı bir sağlık teknolojisi projesidir. Sistem; EKG kâğıdı veya dijital EKG
+                geliştirilen yapay zeka tabanlı bir sağlık teknolojisi projesidir. Sistem; EKG kağıdı veya dijital EKG
                 görüntülerini analiz ederek ritim bozukluklarına yönelik ön değerlendirme ve klinik yönlendirme
                 önerileri sunmayı hedefler.
               </p>
               <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-3 md:mb-4">
-                ChatEKG'yi farklılaştıran temel nokta, yalnızca sonuç üretmeyip açıklanabilir yapay zeka (XAI) ile
-                kararın dayandığı EKG segmentlerini görsel ve metinsel biçimde sunmasıdır. Böylece sağlık
-                profesyonelleri, modelin hangi örüntüler üzerinden sonuca ulaştığını daha şeffaf şekilde inceleyebilir.
+                {
+                  "ChatEKG'yi farklılaştıran temel nokta, yalnızca sonuç üretmeyip açıklanabilir yapay zeka (XAI) ile kararın dayandığı EKG segmentlerini görsel ve metinsel biçimde sunmasıdır. Böylece sağlık profesyonelleri, modelin hangi örüntüler üzerinden sonuca ulaştığını daha şeffaf şekilde inceleyebilir."
+                }
               </p>
               <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
                 Görüntü işleme, derin öğrenme ve doğal dil işleme bileşenleriyle çalışan sistem; chat tabanlı arayüz
@@ -80,17 +80,16 @@ export function ProjectsSection() {
                 Yapay Zeka Destekli Akıllı Antrenman ve Sağlık Asistanı
               </h4>
               <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-3 md:mb-4">
-                GymBot, mobil platformlar için geliştirilen, yapay zeka destekli bir spor ve sağlık takip sistemidir.
-                Sistem, spor hareketlerini analiz ederek kullanıcının hareketleri doğru yapıp yapmadığını, hareketlerin
-                doğruluk oranlarını ve egzersiz sırasında hangi noktaların eksik veya hatalı olduğunu gerçek zamanlı
-                olarak belirlemeyi hedefler.
+                {
+                  "GymBot, mobil platformlar için geliştirilen, yapay zeka destekli bir spor ve sağlık takip sistemidir. Sistem, spor hareketlerini analiz ederek kullanıcının hareketleri doğru yapıp yapmadığını, hareketlerin doğruluk oranlarını ve egzersiz sırasında hangi noktaların eksik veya hatalı olduğunu gerçek zamanlı olarak belirlemeyi hedefler."
+                }
               </p>
               <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-3 md:mb-4">
-                GymBot'un yapay zeka altyapısı yalnızca hareket analiziyle sınırlı değildir. Kullanıcının hedeflerine,
-                fiziksel durumuna ve ilerleme verilerine göre kişiye özel antrenman programları ve diyet planları
-                oluşturabilen bir yapı üzerine geliştirilmektedir. Aynı zamanda kullanıcılar; antrenman programlarını,
-                ağırlık ve gelişim grafiklerini, diyet planlarını ve günlük mikro–makro besin değerlerini uygulama
-                üzerinden takip edebilecektir.
+                GymBot&apos;un yapay zeka altyapısı yalnızca hareket analiziyle sınırlı değildir. Kullanıcının
+                hedeflerine, fiziksel durumuna ve ilerleme verilerine göre kişiye özel antrenman programları ve diyet
+                planları oluşturabilen bir yapı üzerine geliştirilmektedir. Aynı zamanda kullanıcılar; antrenman
+                programlarını, ağırlık ve gelişim grafiklerini, diyet planlarını ve günlük mikro–makro besin değerlerini
+                uygulama üzerinden takip edebilecektir.
               </p>
               <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
                 Bu bütüncül yapı sayesinde GymBot, kullanıcıya yalnızca veri sunan bir uygulama değil; antrenman,
@@ -148,8 +147,9 @@ export function ProjectsSection() {
                 </div>
               </div>
               <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
-                Çetin Group'un ihtiyaçları doğrultusunda geliştirilen bu sistem, "siz istersiniz, biz geliştiririz"
-                yaklaşımımızın somut bir örneğidir.
+                {
+                  'Çetin Group\'un ihtiyaçları doğrultusunda geliştirilen bu sistem, "siz istersiniz, biz geliştiririz" yaklaşımımızın somut bir örneğidir.'
+                }
               </p>
             </div>
           </div>
