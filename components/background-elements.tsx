@@ -5,11 +5,11 @@ export function BackgroundElements() {
     <>
       {/* Tech Grid Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-tech-dark via-tech-darker to-tech-dark"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-[#1a1a1a]"></div>
         <div className="absolute inset-0 tech-grid opacity-20"></div>
       </div>
 
-      {/* Animated Background Particles */}
+      {/* Animated Background Particles - Keeping blue as neural network background */}
       <div className="particles">
         <div className="particle" style={{ left: "10%", animationDelay: "0s" }}></div>
         <div className="particle" style={{ left: "20%", animationDelay: "1s" }}></div>

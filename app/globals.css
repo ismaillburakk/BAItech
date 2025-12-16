@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --tech-dark: #0f172a;
-    --tech-darker: #020617;
+    --tech-dark: #1a1a1a;
+    --tech-darker: #0a0a0a;
     --tech-blue: #3b82f6;
     --tech-purple: #9333ea;
     --tech-cyan: #06b6d4;
@@ -13,6 +13,9 @@
     --neon-purple: #b347d9;
     --logo-orange: #ff8c00;
     --logo-gold: #ffd700;
+    --gray-light: #d1d5db;
+    --gray-medium: #6b7280;
+    --gray-dark: #374151;
   }
 
   html {
@@ -21,27 +24,27 @@
 
   /* Custom Dark Tech Styles */
   .tech-grid {
-    background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(107, 114, 128, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107, 114, 128, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
   }
 
   .cyber-glow {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(107, 114, 128, 0.3);
   }
 
   .neon-text {
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    text-shadow: 0 0 10px rgba(209, 213, 219, 0.5);
   }
 
   .tech-border {
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(107, 114, 128, 0.3);
+    background: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
   }
 
   .gradient-tech {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.1) 0%, rgba(55, 65, 81, 0.1) 100%);
   }
 
   /* Logo specific styles */
@@ -82,7 +85,8 @@
     position: absolute;
     width: 2px;
     height: 2px;
-    background: rgba(59, 130, 246, 0.6);
+    /* Changed from blue to gray particles */
+    background: rgba(156, 163, 175, 0.6);
     border-radius: 50%;
     animation: float 6s ease-in-out infinite;
   }
@@ -114,10 +118,10 @@
   @keyframes pulse-glow {
     0%,
     100% {
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 0 20px rgba(107, 114, 128, 0.3);
     }
     50% {
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 40px rgba(107, 114, 128, 0.6);
     }
   }
 
@@ -149,16 +153,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #1e293b;
+    background: #1a1a1a;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #3b82f6;
+    background: #6b7280;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #2563eb;
+    background: #9ca3af;
   }
 
   /* Mobile Menu Styles */
@@ -185,9 +189,9 @@
     height: 100vh;
     width: 320px;
     max-width: 85vw;
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(59, 130, 246, 0.3);
+    border-right: 1px solid rgba(107, 114, 128, 0.3);
     transform: translateX(-100%);
     transition: transform 0.3s ease-out;
     z-index: 51;
@@ -211,7 +215,7 @@
   }
 
   .mobile-menu-item:hover {
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(107, 114, 128, 0.2);
     color: white;
     text-decoration: none;
   }
@@ -225,7 +229,7 @@
     flex-shrink: 0;
     width: 2.5rem;
     height: 2.5rem;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(55, 65, 81, 0.2));
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
@@ -236,7 +240,7 @@
   }
 
   .mobile-menu-item:hover .mobile-menu-icon {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3));
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.3), rgba(55, 65, 81, 0.3));
     transform: scale(1.05);
   }
 
@@ -249,14 +253,14 @@
   /* GTranslate widget dark theme customization */
   /* Bu kısım globe widget'ının iç elemanları için geçerli olabilir, bu yüzden koruyalım */
   .gtranslate_wrapper .gt_switcher_wrapper {
-    background: rgba(15, 23, 42, 0.9) !important;
-    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    background: rgba(26, 26, 26, 0.9) !important;
+    border: 1px solid rgba(107, 114, 128, 0.3) !important;
     border-radius: 8px !important;
     backdrop-filter: blur(10px) !important;
   }
 
   .gtranslate_wrapper .gt_switcher_wrapper:hover {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3) !important;
+    box-shadow: 0 0 20px rgba(107, 114, 128, 0.3) !important;
   }
 
   .gtranslate_wrapper .gt_switcher_wrapper a {
@@ -264,7 +268,7 @@
   }
 
   .gtranslate_wrapper .gt_switcher_wrapper a:hover {
-    color: #00d4ff !important;
+    color: #f3f4f6 !important;
   }
 }
 
@@ -295,5 +299,14 @@
   }
   .logo-gold {
     color: var(--logo-gold);
+  }
+  .gray-light {
+    color: var(--gray-light);
+  }
+  .gray-medium {
+    color: var(--gray-medium);
+  }
+  .gray-dark {
+    color: var(--gray-dark);
   }
 }

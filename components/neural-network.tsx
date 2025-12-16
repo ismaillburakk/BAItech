@@ -110,11 +110,10 @@ export function NeuralNetwork() {
             (1 - currentDistance / connection.maxDistance) *
             (0.6 + 0.4 * Math.sin(timeRef.current * 2 + connection.pulse))
 
-          // Main connection line
           const gradient = ctx.createLinearGradient(fromNode.x, fromNode.y, toNode.x, toNode.y)
-          gradient.addColorStop(0, `rgba(59, 130, 246, ${opacity * 0.8})`)
-          gradient.addColorStop(0.5, `rgba(0, 212, 255, ${opacity})`)
-          gradient.addColorStop(1, `rgba(59, 130, 246, ${opacity * 0.8})`)
+          gradient.addColorStop(0, `rgba(156, 163, 175, ${opacity * 0.8})`)
+          gradient.addColorStop(0.5, `rgba(209, 213, 219, ${opacity})`)
+          gradient.addColorStop(1, `rgba(156, 163, 175, ${opacity * 0.8})`)
 
           ctx.strokeStyle = gradient
           ctx.lineWidth = 1.5 + Math.sin(timeRef.current * 3 + connection.pulse) * 0.5
@@ -123,23 +122,21 @@ export function NeuralNetwork() {
           ctx.lineTo(toNode.x, toNode.y)
           ctx.stroke()
 
-          // Glow effect
-          ctx.strokeStyle = `rgba(0, 212, 255, ${opacity * 0.3})`
+          ctx.strokeStyle = `rgba(209, 213, 219, ${opacity * 0.3})`
           ctx.lineWidth = 3 + Math.sin(timeRef.current * 3 + connection.pulse) * 1
           ctx.beginPath()
           ctx.moveTo(fromNode.x, fromNode.y)
           ctx.lineTo(toNode.x, toNode.y)
           ctx.stroke()
 
-          // Pulse effect
           const pulsePosition = (Math.sin(timeRef.current * 2 + connection.pulse) + 1) / 2
           const pulseX = fromNode.x + (toNode.x - fromNode.x) * pulsePosition
           const pulseY = fromNode.y + (toNode.y - fromNode.y) * pulsePosition
 
           const pulseGradient = ctx.createRadialGradient(pulseX, pulseY, 0, pulseX, pulseY, 8)
-          pulseGradient.addColorStop(0, `rgba(0, 212, 255, ${opacity * 1.2})`)
-          pulseGradient.addColorStop(0.5, `rgba(59, 130, 246, ${opacity * 0.6})`)
-          pulseGradient.addColorStop(1, "rgba(0, 212, 255, 0)")
+          pulseGradient.addColorStop(0, `rgba(209, 213, 219, ${opacity * 1.2})`)
+          pulseGradient.addColorStop(0.5, `rgba(156, 163, 175, ${opacity * 0.6})`)
+          pulseGradient.addColorStop(1, "rgba(209, 213, 219, 0)")
 
           ctx.fillStyle = pulseGradient
           ctx.beginPath()
@@ -153,19 +150,17 @@ export function NeuralNetwork() {
       nodesRef.current.forEach((node) => {
         const nodeSize = node.size + Math.sin(timeRef.current * 2 + node.pulse) * 0.5
 
-        // Node glow
         const glowGradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, nodeSize * 4)
-        glowGradient.addColorStop(0, "rgba(59, 130, 246, 0.8)")
-        glowGradient.addColorStop(0.5, "rgba(59, 130, 246, 0.3)")
-        glowGradient.addColorStop(1, "rgba(59, 130, 246, 0)")
+        glowGradient.addColorStop(0, "rgba(156, 163, 175, 0.8)")
+        glowGradient.addColorStop(0.5, "rgba(156, 163, 175, 0.3)")
+        glowGradient.addColorStop(1, "rgba(156, 163, 175, 0)")
 
         ctx.fillStyle = glowGradient
         ctx.beginPath()
         ctx.arc(node.x, node.y, nodeSize * 4, 0, Math.PI * 2)
         ctx.fill()
 
-        // Main node
-        ctx.fillStyle = "#3b82f6"
+        ctx.fillStyle = "#9ca3af"
         ctx.beginPath()
         ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2)
         ctx.fill()
