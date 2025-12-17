@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createTransport } from "nodemailer" // createTransport olarak güncellendi
+import nodemailer from "nodemailer"
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,9 +9,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Tüm alanları doldurun" }, { status: 400 })
     }
 
-    // Create transporter using your email credentials
-    const transporter = createTransport({
-      // createTransport olarak güncellendi
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ success: false, message: "Geçerli bir e-posta adresi girin" }, { status: 400 })
+    }
+
+    if (!process.env.EMAIL_HOST_USER || !process.env.EMAIL_HOST_PASSWORD) {
+      console.error("Email configuration missing")
+      return NextResponse.json({ success: false, message: "Email yapılandırması eksik" }, { status: 500 })
+    }
+
+    // Create transporter using nodemailer
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_HOST_USER,

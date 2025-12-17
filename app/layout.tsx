@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { GTranslateWrapper } from "@/components/gtranslate-client-wrapper"
-import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -99,6 +98,7 @@ export const metadata: Metadata = {
     // google: 'your-google-verification-code', // Google Search Console'dan alınacak
     // yandex: 'your-yandex-verification-code', // Yandex Webmaster'dan alınacak
   },
+    generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
@@ -118,16 +118,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang="tr">
       <body
         className={`${inter.className} min-h-screen bg-tech-darker text-white font-tech relative overflow-x-hidden`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {/* GTranslate bileşeni (script dahil) sadece client'ta çalışır */}
-          <GTranslateWrapper />
+        {/* GTranslate bileşeni (script dahil) sadece client'ta çalışır */}
+        <GTranslateWrapper />
 
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   )
