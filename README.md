@@ -1,2 +1,0 @@
-# BAItech
-wsasa
