@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/admin/"],
       },
     ],
-    sitemap: "https://baitechnology.com/sitemap.xml",
-    host: "https://baitechnology.com",
+    sitemap: "https://baitech.com.tr/sitemap.xml",
+    host: "https://baitech.com.tr",
   }
 }

@@ -6,8 +6,8 @@ export function StructuredData() {
     "@type": "Organization",
     name: "BAI Technology",
     alternateName: "BAI Teknoloji",
-    url: "https://baitechnology.com",
-    logo: "https://baitechnology.com/bai-logo.png",
+    url: "https://baitech.com.tr",
+    logo: "https://baitech.com.tr/bai-logo.png",
     description:
       "Yapay zeka destekli özel yazılım çözümleri sunan teknoloji şirketi. ChatEKG, GymBot, web ve mobil yönetim sistemleri, e-ticaret platformları geliştiriyoruz.",
     foundingDate: "2024",
@@ -16,12 +16,6 @@ export function StructuredData() {
       contactType: "customer service",
       availableLanguage: ["Turkish", "English"],
     },
-    sameAs: [
-      // Sosyal medya hesaplarınız varsa buraya ekleyin
-      // "https://twitter.com/baitechnology",
-      // "https://www.linkedin.com/company/baitechnology",
-      // "https://www.instagram.com/baitechnology"
-    ],
     areaServed: {
       "@type": "Country",
       name: "Turkey",
@@ -32,13 +26,13 @@ export function StructuredData() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "BAI Technology",
-    url: "https://baitechnology.com",
+    url: "https://baitech.com.tr",
     description:
       "Yapay zeka ve özel yazılım çözümleri. ChatEKG sağlık teknolojisi, GymBot spor asistanı, web ve mobil yönetim sistemleri.",
     inLanguage: "tr-TR",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://baitechnology.com/?s={search_term_string}",
+      target: "https://baitech.com.tr/?s={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   }
@@ -144,31 +138,31 @@ export function StructuredData() {
         "@type": "ListItem",
         position: 1,
         name: "Ana Sayfa",
-        item: "https://baitechnology.com",
+        item: "https://baitech.com.tr",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Hizmetler",
-        item: "https://baitechnology.com#services",
+        item: "https://baitech.com.tr#services",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Projeler",
-        item: "https://baitechnology.com#projects",
+        item: "https://baitech.com.tr#projects",
       },
       {
         "@type": "ListItem",
         position: 4,
         name: "Hakkımızda",
-        item: "https://baitechnology.com#about",
+        item: "https://baitech.com.tr#about",
       },
       {
         "@type": "ListItem",
         position: 5,
         name: "İletişim",
-        item: "https://baitechnology.com#contact",
+        item: "https://baitech.com.tr#contact",
       },
     ],
   }

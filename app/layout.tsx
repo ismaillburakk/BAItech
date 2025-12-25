@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://baitechnology.com"),
+  metadataBase: new URL("https://baitech.com.tr"),
   alternates: {
     canonical: "/",
     languages: {
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     title: "BAI Technology - Yapay Zeka ve Özel Yazılım Çözümleri",
     description:
       "Yapay zeka destekli özel yazılım çözümleri. ChatEKG, GymBot, web ve mobil yönetim sistemleri, e-ticaret platformları. İşletmenize özel AI çözümleri.",
-    url: "https://baitechnology.com",
+    url: "https://baitech.com.tr",
     siteName: "BAI Technology",
     locale: "tr_TR",
     type: "website",
