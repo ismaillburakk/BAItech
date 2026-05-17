@@ -29,14 +29,14 @@ export function ThemeToggle() {
     <div
       role="group"
       aria-label="Tema seçici"
-      className="inline-flex items-center gap-0 rounded-pill border border-rule bg-paper p-0.5"
+      className="inline-flex items-center gap-0 rounded-pill border border-rule bg-paper p-1"
     >
       <button
         type="button"
         aria-pressed={mounted && theme === "light"}
         aria-label="Açık tema"
         onClick={() => apply("light")}
-        className={`flex h-7 w-7 items-center justify-center rounded-pill transition-colors ${
+        className={`flex h-11 w-11 items-center justify-center rounded-pill transition-colors ${
           mounted && theme === "light" ? "bg-ink text-bg" : "text-ink-3 hover:text-ink"
         }`}
       >
@@ -47,7 +47,7 @@ export function ThemeToggle() {
         aria-pressed={mounted && theme === "dark"}
         aria-label="Koyu tema"
         onClick={() => apply("dark")}
-        className={`flex h-7 w-7 items-center justify-center rounded-pill transition-colors ${
+        className={`flex h-11 w-11 items-center justify-center rounded-pill transition-colors ${
           mounted && theme === "dark" ? "bg-ink text-bg" : "text-ink-3 hover:text-ink"
         }`}
       >

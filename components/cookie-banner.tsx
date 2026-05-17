@@ -42,7 +42,7 @@ export function CookieBanner() {
                 type="button"
                 onClick={rejectNonEssential}
                 aria-label="Çerez bandını kapat ve isteğe bağlı çerezleri reddet"
-                className="-mr-1 -mt-1 inline-flex h-7 w-7 items-center justify-center rounded-sm text-ink-3 hover:text-ink"
+                className="-mr-2 -mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-ink-3 hover:text-ink"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -110,7 +110,7 @@ export function CookieBanner() {
                 type="button"
                 onClick={closeSettings}
                 aria-label="Tercihler penceresini kapat"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-rule text-ink"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-rule text-ink"
               >
                 <X className="h-4 w-4" />
               </button>

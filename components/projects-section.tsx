@@ -351,7 +351,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
             type="button"
             onClick={() => setAutoplay((v) => !v)}
             aria-label={autoplay ? "Otomatik geçişi durdur" : "Otomatik geçişi başlat"}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
           >
             {autoplay ? (
               <Pause className="h-3.5 w-3.5" aria-hidden="true" />
@@ -363,7 +363,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
             type="button"
             onClick={prev}
             aria-label="Önceki proje"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -371,16 +371,16 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
             type="button"
             onClick={next}
             aria-label="Sonraki proje"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-pill border border-rule text-ink transition-colors hover:bg-bg-elev"
           >
             <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>
 
-      {/* Dot indicators */}
+      {/* Dot indicators — visible dots stay small, tap target is 44px tall × wider */}
       <div
-        className="wrap mt-6 flex items-center justify-center gap-2"
+        className="wrap mt-2 flex items-center justify-center"
         role="tablist"
         aria-label="Proje seç"
       >
@@ -396,10 +396,16 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
               setActiveIndex(i)
               scrollToIndex(i)
             }}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              activeIndex === i ? "w-8 bg-ink" : "w-1.5 bg-rule hover:bg-ink-3"
-            }`}
+            className="group/dot inline-flex h-11 min-w-[36px] items-center justify-center px-2"
           >
+            <span
+              aria-hidden="true"
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === i
+                  ? "w-8 bg-ink"
+                  : "w-1.5 bg-rule group-hover/dot:bg-ink-3"
+              }`}
+            />
             <span className="sr-only">{p.title}</span>
           </button>
         ))}

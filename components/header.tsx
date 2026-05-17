@@ -51,7 +51,7 @@ export function Header() {
           {/* Brand */}
           <button
             onClick={() => handleNavClick("#home")}
-            className="flex items-center gap-3 text-left"
+            className="-ml-1 flex h-11 items-center gap-3 px-1 text-left"
             aria-label="Ana sayfaya git"
           >
             <span className="relative inline-flex h-9 w-9 items-center justify-center md:h-10 md:w-10">
@@ -102,7 +102,7 @@ export function Header() {
             </button>
             <button
               onClick={() => setIsMobileMenuOpen((v) => !v)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-rule text-ink md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-rule text-ink md:hidden"
               aria-label={isMobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={isMobileMenuOpen}
             >
@@ -141,7 +141,7 @@ export function Header() {
               </button>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-rule text-ink"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-rule text-ink"
                 aria-label="Menüyü kapat"
               >
                 <X className="h-5 w-5" />
