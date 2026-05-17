@@ -1,182 +1,186 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import Image from "next/image"
-import { Menu, X, Home, Info, Layers, Mail, Briefcase } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
+
+const navItems = [
+  { href: "#home", label: "Ana Sayfa" },
+  { href: "#services", label: "Hizmetler" },
+  { href: "#projects", label: "Projeler" },
+  { href: "#about", label: "Hakkımızda" },
+  { href: "#contact", label: "İletişim" },
+]
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-    if (!isMobileMenuOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
+  useEffect(() => {
+    setMounted(true)
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : ""
+    return () => {
       document.body.style.overflow = ""
     }
-  }
+  }, [isMobileMenuOpen])
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false)
-    document.body.style.overflow = ""
-
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
+    const el = document.querySelector(href)
+    if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <header className="tech-border sticky top-0 z-50 border-b border-tech-blue/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="relative">
+    <>
+      <header
+        className={`sticky top-0 z-50 backdrop-blur transition-colors ${
+          scrolled ? "border-b border-rule bg-bg/85" : "border-b border-transparent bg-bg/70"
+        }`}
+      >
+        <div className="wrap flex h-16 items-center justify-between md:h-20">
+          {/* Brand */}
+          <button
+            onClick={() => handleNavClick("#home")}
+            className="flex items-center gap-3 text-left"
+            aria-label="Ana sayfaya git"
+          >
+            <span className="relative inline-flex h-9 w-9 items-center justify-center md:h-10 md:w-10">
               <Image
                 src="/bai-logo.png"
-                alt="BAI TECHNOLOGY Logo - Yapay Zeka Çözümleri"
-                width={48}
-                height={48}
-                className="logo-glow animate-logo-pulse"
+                alt="BAI Technology"
+                width={40}
+                height={40}
+                className="object-contain"
                 priority
               />
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-white neon-text notranslate">BAI TECHNOLOGY</h1>
-              <p className="text-xs text-tech-cyan notranslate">AI Solutions for Business</p>
-            </div>
-          </div>
+            </span>
+            <span className="hidden flex-col leading-tight sm:flex">
+              <span className="notranslate font-serif text-[17px] tracking-tight text-ink">
+                BAI Technology
+              </span>
+              <span className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                AI Solutions for Business
+              </span>
+            </span>
+          </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Ana navigasyon">
-            <button
-              onClick={() => handleNavClick("#home")}
-              className="text-gray-300 hover:text-neon-blue font-medium transition-all duration-300 hover:glow relative group"
-              aria-label="Ana sayfaya git"
-            >
-              Ana Sayfa
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-300 group-hover:w-full"></span>
-            </button>
-            <button
-              onClick={() => handleNavClick("#about")}
-              className="text-gray-300 hover:text-neon-blue font-medium transition-all duration-300 hover:glow relative group"
-              aria-label="Hakkımızda bölümüne git"
-            >
-              Hakkımızda
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-300 group-hover:w-full"></span>
-            </button>
-            <button
-              onClick={() => handleNavClick("#services")}
-              className="text-gray-300 hover:text-neon-blue font-medium transition-all duration-300 hover:glow relative group"
-              aria-label="Hizmetler bölümüne git"
-            >
-              Hizmetler
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-300 group-hover:w-full"></span>
-            </button>
-            <button
-              onClick={() => handleNavClick("#projects")}
-              className="text-gray-300 hover:text-neon-blue font-medium transition-all duration-300 hover:glow relative group"
-              aria-label="Projeler bölümüne git"
-            >
-              Projeler
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-300 group-hover:w-full"></span>
-            </button>
-            <button
-              onClick={() => handleNavClick("#contact")}
-              className="text-gray-300 hover:text-neon-blue font-medium transition-all duration-300 hover:glow relative group"
-              aria-label="İletişim bölümüne git"
-            >
-              İletişim
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-300 group-hover:w-full"></span>
-            </button>
+          {/* Desktop Nav */}
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Ana navigasyon">
+            {navItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => handleNavClick(item.href)}
+                className="group relative text-[14px] text-ink-2 transition-colors hover:text-ink"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-ink transition-transform duration-300 group-hover:scale-x-100" />
+              </button>
+            ))}
           </nav>
 
-          {/* Contact Button & Mobile Menu */}
-          <div className="flex items-center space-x-4">
+          {/* Right cluster */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
             <button
               onClick={() => handleNavClick("#contact")}
-              className="hidden sm:block bg-gradient-to-r from-tech-blue to-tech-purple hover:from-neon-blue hover:to-neon-purple text-white px-6 py-2 rounded-2xl transition-all duration-300 cyber-glow font-semibold"
+              className="hidden rounded-pill bg-ink px-4 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px sm:inline-flex"
               aria-label="İletişime geç"
             >
-              İletişime Geç
+              İletişime Geç →
             </button>
-
-            {/* Mobile Menu Button */}
             <button
-              onClick={toggleMobileMenu}
-              className="md:hidden p-2 rounded-lg hover:bg-tech-blue/20 transition-colors"
-              aria-label="Mobil menüyü aç"
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-rule text-ink md:hidden"
+              aria-label={isMobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={isMobileMenuOpen}
             >
-              <Menu className="h-6 w-6 text-neon-blue" />
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
-      <div className={`mobile-menu-backdrop ${isMobileMenuOpen ? "open" : ""}`} onClick={toggleMobileMenu}></div>
-      <nav className={`mobile-menu-panel ${isMobileMenuOpen ? "open" : ""}`} aria-label="Mobil navigasyon">
-        <div className="flex items-center justify-between p-4 border-b border-tech-blue/30">
-          <span className="text-lg font-semibold text-neon-blue">Menu</span>
-          <button
-            onClick={toggleMobileMenu}
-            className="p-2 rounded-lg hover:bg-tech-blue/20 transition-colors"
-            aria-label="Mobil menüyü kapat"
+      {mounted &&
+        isMobileMenuOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[60] flex flex-col bg-bg md:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobil navigasyon"
           >
-            <X className="h-6 w-6 text-neon-blue" />
-          </button>
-        </div>
-        <div className="p-4 space-y-2">
-          <button onClick={() => handleNavClick("#home")} className="mobile-menu-item" aria-label="Ana sayfaya git">
-            <span className="mobile-menu-icon">
-              <Home size={20} />
-            </span>
-            Ana Sayfa
-          </button>
-          <button
-            onClick={() => handleNavClick("#about")}
-            className="mobile-menu-item"
-            aria-label="Hakkımızda bölümüne git"
-          >
-            <span className="mobile-menu-icon">
-              <Info size={20} />
-            </span>
-            Hakkımızda
-          </button>
-          <button
-            onClick={() => handleNavClick("#services")}
-            className="mobile-menu-item"
-            aria-label="Hizmetler bölümüne git"
-          >
-            <span className="mobile-menu-icon">
-              <Layers size={20} />
-            </span>
-            Hizmetler
-          </button>
-          <button
-            onClick={() => handleNavClick("#projects")}
-            className="mobile-menu-item"
-            aria-label="Projeler bölümüne git"
-          >
-            <span className="mobile-menu-icon">
-              <Briefcase size={20} />
-            </span>
-            Projeler
-          </button>
-          <button
-            onClick={() => handleNavClick("#contact")}
-            className="mobile-menu-item"
-            aria-label="İletişim bölümüne git"
-          >
-            <span className="mobile-menu-icon">
-              <Mail size={20} />
-            </span>
-            İletişim
-          </button>
-        </div>
-      </nav>
-    </header>
+            {/* Replicated top bar so it's clear the menu owns the viewport */}
+            <div className="wrap flex h-16 items-center justify-between border-b border-rule">
+              <button
+                onClick={() => handleNavClick("#home")}
+                className="flex items-center gap-3"
+                aria-label="Ana sayfaya git"
+              >
+                <Image
+                  src="/bai-logo.png"
+                  alt="BAI Technology"
+                  width={36}
+                  height={36}
+                  className="object-contain"
+                />
+                <span className="notranslate font-serif text-[16px] tracking-tight text-ink">
+                  BAI Technology
+                </span>
+              </button>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-rule text-ink"
+                aria-label="Menüyü kapat"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <nav
+              className="wrap flex-1 overflow-y-auto py-6"
+              aria-label="Mobil ana menü"
+            >
+              <ul className="flex flex-col">
+                {navItems.map((item, i) => (
+                  <li key={item.href}>
+                    <button
+                      onClick={() => handleNavClick(item.href)}
+                      className="flex w-full items-center justify-between border-b border-rule-2 py-5 text-left"
+                    >
+                      <span className="font-serif text-2xl text-ink">{item.label}</span>
+                      <span className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8 flex items-center justify-between">
+                <ThemeToggle />
+                <button
+                  onClick={() => handleNavClick("#contact")}
+                  className="rounded-pill bg-ink px-5 py-2.5 text-sm font-medium text-bg"
+                >
+                  İletişime Geç →
+                </button>
+              </div>
+            </nav>
+          </div>,
+          document.body
+        )}
+    </>
   )
 }

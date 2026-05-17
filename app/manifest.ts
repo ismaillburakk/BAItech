@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Yapay zeka destekli özel yazılım çözümleri. ChatEKG, GymBot, web ve mobil yönetim sistemleri.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0f",
-    theme_color: "#0a0a0f",
+    background_color: "#f7f4ee",
+    theme_color: "#f7f4ee",
     icons: [
       {
         src: "/favicon.png",

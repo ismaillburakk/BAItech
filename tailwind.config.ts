@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
+import type { Config } from "tailwindcss"
+
+const config: Config = {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,87 +11,58 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        bg: "var(--bg)",
+        "bg-elev": "var(--bg-elev)",
+        paper: "var(--paper)",
+        ink: {
+          DEFAULT: "var(--ink)",
+          2: "var(--ink-2)",
+          3: "var(--ink-3)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        rule: {
+          DEFAULT: "var(--rule)",
+          2: "var(--rule-2)",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        amber: {
+          DEFAULT: "var(--amber)",
+          ink: "var(--amber-ink)",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        green: {
+          DEFAULT: "var(--green)",
+          ink: "var(--green-ink)",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        "tech-dark": "#0f172a",
-        "tech-darker": "#020617",
-        "tech-blue": "#3b82f6",
-        "tech-purple": "#9333ea",
-        "tech-cyan": "#06b6d4",
-        "neon-blue": "#00d4ff",
-        "neon-purple": "#b347d9",
-        "logo-orange": "#ff8c00",
-        "logo-gold": "#ffd700",
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        tech: ["Inter", "system-ui", "sans-serif"],
+        serif: ['"Instrument Serif"', "Georgia", "serif"],
+        sans: ['"Manrope"', "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+      },
+      borderRadius: {
+        sm: "8px",
+        md: "14px",
+        lg: "20px",
+        pill: "999px",
+      },
+      maxWidth: {
+        wrap: "1360px",
+      },
+      letterSpacing: {
+        mono: "0.08em",
       },
       animation: {
-        "fade-in-up": "fadeInUp 0.6s ease-out",
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "logo-pulse": "logo-pulse 3s ease-in-out infinite",
+        "fade-up": "fadeUp 0.8s ease-out",
+        "spin-slow": "spin 40s linear infinite",
+        "spin-reverse": "spin 28s linear infinite reverse",
       },
       keyframes: {
-        fadeInUp: {
-          from: {
-            opacity: "0",
-            transform: "translateY(30px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.6)" },
-        },
-        "logo-pulse": {
-          "0%, 100%": {
-            filter: "drop-shadow(0 0 10px rgba(255, 165, 0, 0.3)) drop-shadow(0 0 20px rgba(255, 165, 0, 0.1))",
-          },
-          "50%": {
-            filter: "drop-shadow(0 0 20px rgba(255, 165, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 165, 0, 0.2))",
-          },
+        fadeUp: {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 }
+
+export default config

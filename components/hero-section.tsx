@@ -1,136 +1,169 @@
 "use client"
 
-import Image from "next/image"
-import { Zap, ArrowRight, PlayCircle, Cpu, Brain, Network, Database } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
-  const handleContactClick = () => {
-    const element = document.querySelector("#contact")
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
-  const handleExploreClick = () => {
-    const element = document.querySelector("#services")
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
+  const scrollTo = (sel: string) => {
+    const el = document.querySelector(sel)
+    if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
-      {/* Enhanced Parallax Background */}
-      <div className="parallax-bg absolute inset-0 bg-gradient-to-br from-tech-blue/5 via-tech-purple/5 to-tech-cyan/5"></div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <div className="space-y-6 md:space-y-8 animate-fade-in-up text-center lg:text-left">
-            <div className="space-y-4 md:space-y-6">
-              <span className="inline-block tech-border px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium text-neon-blue border-neon-blue/50 cyber-glow">
-                <Zap className="inline h-3 w-3 md:h-4 md:w-4 mr-2" />
-                Teknoloji & İnovasyon
+    <section id="home" className="relative overflow-hidden pt-16 md:pt-24">
+      <div className="wrap pb-20 pt-10 md:pb-28 md:pt-16">
+        <div className="grid gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16 lg:items-end">
+          {/* Text column */}
+          <div className="reveal">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
+                — Teknoloji &amp; İnovasyon
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight">
-                Geleceği{" "}
-                <span className="text-transparent bg-gradient-to-r from-logo-orange to-logo-gold bg-clip-text">
-                  Teknoloji
-                </span>
-                <br />
-                ile Şekillendiriyoruz
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
-                BAI TECHNOLOGY olarak, en son teknolojilerle işletmenizi dijital dönüşüm yolculuğunda destekliyoruz.
-              </p>
+              <span className="hidden h-px w-12 bg-rule sm:block" />
+              <span className="notranslate font-mono text-[11px] uppercase tracking-mono text-ink-3">
+                BAI · 001
+              </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
+            <h1 className="display mt-6 text-[clamp(40px,6.5vw,108px)] text-ink">
+              Geleceği{" "}
+              <span className="italic-amber">teknoloji</span> ile{" "}
+              <span className="whitespace-nowrap">
+                şekillendiriyoruz<span className="italic-amber">.</span>
+              </span>
+            </h1>
+
+            <p className="mt-7 max-w-xl text-[17px] leading-relaxed text-ink-2 md:text-[18px]">
+              BAI TECHNOLOGY olarak, en son teknolojilerle işletmenizi dijital dönüşüm yolculuğunda
+              destekliyoruz.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                onClick={handleContactClick}
-                className="bg-gradient-to-r from-logo-orange to-logo-gold hover:from-logo-gold hover:to-logo-orange text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-all duration-300 cyber-glow flex items-center justify-center group text-sm md:text-base"
-                aria-label="Ücretsiz danışmanlık almak için iletişime geçin"
+                onClick={() => scrollTo("#contact")}
+                className="group inline-flex items-center justify-center gap-2 rounded-pill bg-ink px-6 py-3 text-[14px] font-medium text-bg transition-transform hover:-translate-y-px"
               >
                 Ücretsiz Danışmanlık
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </button>
               <button
-                onClick={handleExploreClick}
-                className="tech-border border-neon-purple text-neon-purple hover:bg-neon-purple/10 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center text-sm md:text-base"
-                aria-label="Hizmetlerimizi ve çözümlerimizi keşfedin"
+                onClick={() => scrollTo("#services")}
+                className="group inline-flex items-center justify-center gap-2 rounded-pill border border-rule px-6 py-3 text-[14px] font-medium text-ink transition-colors hover:bg-bg-elev"
               >
-                <PlayCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
                 Çözümlerimizi Keşfedin
+                <span className="text-ink-3 transition-transform group-hover:translate-x-0.5">→</span>
               </button>
             </div>
-          </div>
 
-          <div className="relative animate-fade-in-up mt-8 lg:mt-0">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                <div
-                  className="w-60 h-60 md:w-80 md:h-80 border border-neon-blue/20 rounded-full animate-spin"
-                  style={{ animationDuration: "20s" }}
-                ></div>
-                <div
-                  className="absolute w-44 h-44 md:w-60 md:h-60 border border-logo-orange/30 rounded-full animate-spin"
-                  style={{ animationDuration: "15s", animationDirection: "reverse" }}
-                ></div>
-                <div
-                  className="absolute w-28 h-28 md:w-40 md:h-40 border border-tech-cyan/20 rounded-full animate-spin"
-                  style={{ animationDuration: "10s" }}
-                ></div>
+            {/* Meta row */}
+            <div className="mt-14 grid grid-cols-3 gap-6 border-t border-rule pt-6 max-w-md">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Konum</div>
+                <div className="notranslate mt-1 font-serif text-lg text-ink">Uşak / TR</div>
               </div>
-
-              <div className="relative z-10 flex items-center justify-center h-60 md:h-80">
-                <div className="relative">
-                  <Image
-                    src="/bai-logo.png"
-                    alt="BAI Technology - Yapay Zeka ve Özel Yazılım Çözümleri Logo"
-                    width={120}
-                    height={120}
-                    className="logo-glow animate-logo-pulse relative z-10 w-28 h-28 md:w-40 md:h-40"
-                    priority
-                  />
-                  <div className="absolute inset-0 w-28 h-28 md:w-40 md:h-40 bg-logo-orange/20 rounded-full blur-xl animate-pulse"></div>
-                  <div
-                    className="absolute inset-0 w-28 h-28 md:w-40 md:h-40 bg-logo-gold/10 rounded-full blur-2xl animate-pulse"
-                    style={{ animationDelay: "1s" }}
-                  ></div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Odak</div>
+                <div className="notranslate mt-1 font-serif text-lg italic text-ink">
+                  AI · Software
                 </div>
               </div>
-
-              <div
-                className="hidden md:block absolute top-10 left-10 tech-border p-3 rounded-lg animate-bounce cyber-glow"
-                style={{ animationDelay: "0.5s" }}
-                aria-hidden="true"
-              >
-                <Cpu className="h-6 w-6 text-neon-blue" />
-              </div>
-              <div
-                className="hidden md:block absolute top-20 right-10 tech-border p-3 rounded-lg animate-bounce cyber-glow"
-                style={{ animationDelay: "1s" }}
-                aria-hidden="true"
-              >
-                <Brain className="h-6 w-6 text-logo-orange" />
-              </div>
-              <div
-                className="hidden md:block absolute bottom-20 left-20 tech-border p-3 rounded-lg animate-bounce cyber-glow"
-                style={{ animationDelay: "1.5s" }}
-                aria-hidden="true"
-              >
-                <Network className="h-6 w-6 text-tech-cyan" />
-              </div>
-              <div
-                className="hidden md:block absolute bottom-10 right-20 tech-border p-3 rounded-lg animate-bounce cyber-glow"
-                style={{ animationDelay: "2s" }}
-                aria-hidden="true"
-              >
-                <Database className="h-6 w-6 text-logo-gold" />
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Statü</div>
+                <div className="mt-1 font-serif text-lg text-ink">Aktif</div>
               </div>
             </div>
           </div>
+
+          {/* Side figure */}
+          <figure className="reveal relative mx-auto w-full max-w-md">
+            <div className="relative aspect-[4/5] w-full rounded-md border border-rule bg-paper">
+              {/* Corner ticks */}
+              <CornerTicks />
+
+              {/* Coordinates */}
+              <div className="notranslate pointer-events-none absolute left-4 top-4 font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                38.6823° N
+              </div>
+              <div className="notranslate pointer-events-none absolute right-4 top-4 font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                29.4082° E
+              </div>
+              <div className="notranslate pointer-events-none absolute left-4 bottom-4 font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                FIG. 01
+              </div>
+              <div className="notranslate pointer-events-none absolute right-4 bottom-4 font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                BAI-001
+              </div>
+
+              {/* Compass glyph */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <svg
+                  viewBox="0 0 200 200"
+                  className="h-3/5 w-3/5 animate-spin-slow text-ink"
+                  aria-hidden="true"
+                >
+                  <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.35" />
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
+                  <circle cx="100" cy="100" r="48" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+                  {/* Compass diamond */}
+                  <g stroke="currentColor" strokeWidth="1" fill="none">
+                    <path d="M100 18 L114 100 L100 182 L86 100 Z" />
+                    <path d="M18 100 L100 86 L182 100 L100 114 Z" />
+                  </g>
+                  {/* Amber north tip */}
+                  <path d="M100 18 L114 100 L100 100 Z" fill="var(--amber)" opacity="0.85" />
+                  {/* Cardinal letters */}
+                  <g
+                    fontFamily="JetBrains Mono, monospace"
+                    fontSize="9"
+                    fill="currentColor"
+                    opacity="0.6"
+                    textAnchor="middle"
+                  >
+                    <text x="100" y="10">N</text>
+                    <text x="100" y="198">S</text>
+                    <text x="194" y="103">E</text>
+                    <text x="6" y="103">W</text>
+                  </g>
+                  {/* Tick marks */}
+                  <g stroke="currentColor" strokeWidth="0.5" opacity="0.4">
+                    {Array.from({ length: 36 }).map((_, i) => {
+                      const a = (i * 10 * Math.PI) / 180
+                      const r2 = i % 9 === 0 ? 82 : 87
+                      const x1 = (100 + Math.sin(a) * 92).toFixed(3)
+                      const y1 = (100 - Math.cos(a) * 92).toFixed(3)
+                      const x2 = (100 + Math.sin(a) * r2).toFixed(3)
+                      const y2 = (100 - Math.cos(a) * r2).toFixed(3)
+                      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
+                    })}
+                  </g>
+                  <circle cx="100" cy="100" r="2.5" fill="var(--amber)" />
+                </svg>
+              </div>
+
+              {/* Counter-rotating outer ring */}
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div className="h-[88%] w-[88%] animate-spin-reverse rounded-full border border-dashed border-rule-2 opacity-70" />
+              </div>
+            </div>
+
+            <figcaption className="notranslate mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-mono text-ink-3">
+              <span>Compass · Edition 001</span>
+              <span>2025 / Q4</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
+  )
+}
+
+function CornerTicks() {
+  const arm = "h-3 w-3 absolute"
+  return (
+    <>
+      <span className={`${arm} left-2 top-2 border-l border-t border-ink/40`} />
+      <span className={`${arm} right-2 top-2 border-r border-t border-ink/40`} />
+      <span className={`${arm} left-2 bottom-2 border-l border-b border-ink/40`} />
+      <span className={`${arm} right-2 bottom-2 border-r border-b border-ink/40`} />
+    </>
   )
 }

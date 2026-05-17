@@ -1,114 +1,100 @@
 "use client"
 
-import { Check, Eye, Target } from "lucide-react"
+const bullets = [
+  "Uzman AI geliştirici ekibi",
+  "İşletmeye özel çözümler",
+  "7/24 teknik destek",
+  "Kanıtlanmış başarı hikayeleri",
+]
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-12 md:py-20 relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16 animate-fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 neon-text">Hakkımızda</h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
-            BAI Technology olarak, yapay zeka teknolojilerinin gücünü insanlığın hizmetine sunuyoruz
+    <section id="about" className="relative py-24 md:py-32">
+      <div className="wrap">
+        <div className="reveal mb-14 grid gap-8 md:grid-cols-[auto_1fr] md:items-end md:gap-16">
+          <div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
+                — Hakkımızda
+              </span>
+              <span className="hidden h-px w-10 bg-rule sm:block" />
+              <span className="notranslate font-mono text-[11px] uppercase tracking-mono text-ink-3">
+                Section 04
+              </span>
+            </div>
+            <h2 className="display mt-5 text-[clamp(36px,5vw,68px)] text-ink">
+              Neden{" "}
+              <span className="italic-amber">
+                <span className="notranslate">BAI Technology</span>?
+              </span>
+            </h2>
+          </div>
+          <p className="max-w-md text-[16px] leading-relaxed text-ink-2 md:justify-self-end md:text-right">
+            BAI Technology olarak, yapay zeka teknolojilerinin gücünü insanlığın hizmetine sunuyoruz.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
-          <div className="animate-fade-in-up">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">
-              <span className="text-transparent bg-gradient-to-r from-logo-orange to-logo-gold bg-clip-text">
-                Neden
-              </span>{" "}
-              BAI Technology?
-            </h3>
-
-            <p className="text-base md:text-lg text-gray-300 mb-6 md:mb-8">
-              Yapay zeka alanında uzman ekibimizle, işletmenizin ihtiyaçlarına özel çözümler geliştiriyoruz. Amacımız,
-              teknolojinin gücünü kullanarak iş süreçlerinizi daha verimli hale getirmek.
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          {/* Left — narrative + bullets */}
+          <div className="reveal">
+            <p className="text-[18px] leading-relaxed text-ink-2 md:text-[19px]">
+              Yapay zeka alanında uzman ekibimizle, işletmenizin ihtiyaçlarına özel çözümler
+              geliştiriyoruz. Amacımız, teknolojinin gücünü kullanarak iş süreçlerinizi daha verimli
+              hale getirmek.
             </p>
 
-            <div className="space-y-3 md:space-y-4">
-              <div className="flex items-center space-x-3 group">
-                <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:animate-pulse-glow flex-shrink-0">
-                  <Check className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                </div>
-                <span className="text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
-                  Uzman AI geliştirici ekibi
-                </span>
-              </div>
-
-              <div className="flex items-center space-x-3 group">
-                <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:animate-pulse-glow flex-shrink-0">
-                  <Check className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                </div>
-                <span className="text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
-                  İşletmeye özel çözümler
-                </span>
-              </div>
-
-              <div className="flex items-center space-x-3 group">
-                <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:animate-pulse-glow flex-shrink-0">
-                  <Check className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                </div>
-                <span className="text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
-                  7/24 teknik destek
-                </span>
-              </div>
-
-              <div className="flex items-center space-x-3 group">
-                <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:animate-pulse-glow flex-shrink-0">
-                  <Check className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                </div>
-                <span className="text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
-                  Kanıtlanmış başarı hikayeleri
-                </span>
-              </div>
-            </div>
+            <ul className="mt-10 divide-y divide-rule border-y border-rule">
+              {bullets.map((b, i) => (
+                <li
+                  key={b}
+                  className="grid grid-cols-[auto_1fr_auto] items-center gap-6 py-5"
+                >
+                  <span className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-serif text-[clamp(22px,2.4vw,28px)] leading-tight text-ink">
+                    {b}
+                  </span>
+                  <span aria-hidden="true" className="text-ink-3">
+                    →
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="space-y-6 md:space-y-8 animate-fade-in-up">
-            {/* Vizyon */}
-            <div className="tech-border rounded-2xl p-6 md:p-8 cyber-glow relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0 bg-gradient-to-br from-logo-orange/20 to-neon-blue/20"></div>
-              </div>
-              <div className="relative z-10">
-                <div className="flex items-center mb-3 md:mb-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-logo-orange to-logo-gold rounded-full flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                    <Eye className="h-5 w-5 md:h-6 md:w-6 text-white" />
-                  </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white">Vizyonumuz</h4>
-                </div>
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                  Yapay zekâ teknolojilerini kullanarak insanların günlük yaşamlarını kolaylaştırmak; aldıkları
-                  hizmetlerde kaliteyi artırmak ve her bireye, aldığı hizmetin değerli olduğunu hissettiren yenilikçi
-                  çözümler sunmak.
-                </p>
-              </div>
-            </div>
-
-            {/* Misyon */}
-            <div className="tech-border rounded-2xl p-6 md:p-8 cyber-glow relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/20 to-tech-purple/20"></div>
-              </div>
-              <div className="relative z-10">
-                <div className="flex items-center mb-3 md:mb-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-neon-blue to-tech-purple rounded-full flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                    <Target className="h-5 w-5 md:h-6 md:w-6 text-white" />
-                  </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white">Misyonumuz</h4>
-                </div>
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                  Toplumun yaşam kalitesini artıran, erişilebilir ve güvenilir yapay zekâ tabanlı hizmetler
-                  geliştirerek; kullanıcı odaklı, etik değerlere bağlı, sürdürülebilir ve yüksek standartlarda dijital
-                  deneyimler sunmak.
-                </p>
-              </div>
-            </div>
+          {/* Right — vision + mission cards */}
+          <div className="reveal flex flex-col gap-8">
+            <ValueCard
+              tag="i."
+              title="Vizyonumuz"
+              body="Yapay zekâ teknolojilerini kullanarak insanların günlük yaşamlarını kolaylaştırmak; aldıkları hizmetlerde kaliteyi artırmak ve her bireye, aldığı hizmetin değerli olduğunu hissettiren yenilikçi çözümler sunmak."
+            />
+            <ValueCard
+              tag="ii."
+              title="Misyonumuz"
+              body="Toplumun yaşam kalitesini artıran, erişilebilir ve güvenilir yapay zekâ tabanlı hizmetler geliştirerek; kullanıcı odaklı, etik değerlere bağlı, sürdürülebilir ve yüksek standartlarda dijital deneyimler sunmak."
+            />
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function ValueCard({ tag, title, body }: { tag: string; title: string; body: string }) {
+  return (
+    <article className="relative rounded-md border border-rule bg-paper p-8 md:p-10">
+      <div className="flex items-center justify-between">
+        <span className="notranslate font-mono text-[11px] uppercase tracking-mono text-ink-3">
+          {tag}
+        </span>
+        <span className="h-px w-12 bg-rule" />
+      </div>
+      <h3 className="mt-6 font-serif italic text-[clamp(28px,3.2vw,40px)] leading-tight text-amber-ink">
+        {title}
+      </h3>
+      <p className="mt-5 text-[15px] leading-relaxed text-ink-2">{body}</p>
+    </article>
   )
 }

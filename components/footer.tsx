@@ -1,95 +1,164 @@
 "use client"
 
 import Image from "next/image"
-import { Mail, Phone, MapPin } from "lucide-react"
+import Link from "next/link"
+import { useConsent } from "@/components/consent-context"
+
+const quickLinks = [
+  { href: "#home", label: "Ana Sayfa" },
+  { href: "#services", label: "Hizmetler" },
+  { href: "#projects", label: "Projeler" },
+  { href: "#about", label: "Hakkımızda" },
+  { href: "#contact", label: "İletişim" },
+]
+
+const legalLinks = [
+  { href: "/aydinlatma-metni", label: "Aydınlatma Metni" },
+  { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
+  { href: "/cerez-politikasi", label: "Çerez Politikası" },
+]
 
 export function Footer() {
+  const { openSettings } = useConsent()
+
   const handleNavClick = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href)
+      if (el) el.scrollIntoView({ behavior: "smooth" })
+    } else {
+      window.location.href = href
     }
   }
 
   return (
-    <footer className="bg-black/90 border-t border-gray-800 py-8 md:py-12 backdrop-blur-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          <div className="sm:col-span-2">
-            <div className="flex items-center space-x-3 mb-3 md:mb-4">
+    <footer className="border-t border-rule bg-bg">
+      <div className="wrap py-16 md:py-24">
+        {/* Top mark row */}
+        <div className="flex flex-col gap-10 border-b border-rule pb-10 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-md">
+            <div className="flex items-center gap-3">
               <Image
                 src="/bai-logo.png"
                 alt="BAI Technology"
-                width={36}
-                height={36}
-                className="logo-glow md:w-10 md:h-10"
+                width={40}
+                height={40}
+                className="object-contain"
               />
-              <h3 className="text-xl md:text-2xl font-bold text-white neon-text notranslate">BAI TECHNOLOGY</h3>
+              <div className="leading-tight">
+                <div className="notranslate font-serif text-[20px] text-ink">BAI Technology</div>
+                <div className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                  AI Solutions for Business
+                </div>
+              </div>
             </div>
-            <p className="text-sm md:text-base text-gray-400 mb-4">
-              İşletmenizin geleceğini yapay zeka ile şekillendiriyoruz. Verimliliği artıran, maliyetleri düşüren AI
-              çözümleri.
+            <p className="mt-6 text-[15px] leading-relaxed text-ink-2">
+              İşletmenizin geleceğini yapay zeka ile şekillendiriyoruz. Verimliliği artıran,
+              maliyetleri düşüren AI çözümleri.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-300">Hızlı Linkler</h4>
-            <ul className="space-y-1.5 md:space-y-2 text-sm md:text-base text-gray-400">
-              <li>
-                <button onClick={() => handleNavClick("#home")} className="hover:text-white transition-colors">
-                  Ana Sayfa
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleNavClick("#services")} className="hover:text-white transition-colors">
-                  Hizmetler
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleNavClick("#projects")} className="hover:text-white transition-colors">
-                  Projeler
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleNavClick("#about")} className="hover:text-white transition-colors">
-                  Hakkımızda
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleNavClick("#contact")} className="hover:text-white transition-colors">
-                  İletişim
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-300">İletişim</h4>
-            <ul className="space-y-1.5 md:space-y-2 text-sm md:text-base text-gray-400">
-              <li className="flex items-center space-x-2">
-                <Mail className="h-3.5 w-3.5 md:h-4 md:w-4 text-gray-500 flex-shrink-0" />
-                <span className="break-all">info@baitech.com.tr</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <Phone className="h-3.5 w-3.5 md:h-4 md:w-4 text-gray-500 flex-shrink-0" />
-                <span>+90 532 369 4564</span>
-              </li>
-              <li className="flex items-start space-x-2">
-                <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 text-gray-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  Tekstil OSB Mah. 204. Cd. No:566/103
-                  <br />
-                  Merkez Uşak
-                </span>
-              </li>
-            </ul>
+          <div className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
+            <div>Edition · 2025 / Q4</div>
+            <div className="mt-1">Uşak · Türkiye</div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-sm md:text-base text-gray-400">
-          <p>© 2025 BAI TECHNOLOGY. Tüm hakları saklıdır.</p>
+        {/* Link groups */}
+        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-5">
+          <FooterGroup title="Hızlı Linkler">
+            <ul className="space-y-2.5">
+              {quickLinks.map((l) => (
+                <li key={l.href}>
+                  <button
+                    onClick={() => handleNavClick(l.href)}
+                    className="text-[15px] text-ink-2 transition-colors hover:text-ink"
+                  >
+                    {l.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </FooterGroup>
+
+          <FooterGroup title="İletişim">
+            <ul className="space-y-2.5 text-[15px] text-ink-2">
+              <li>
+                <a href="mailto:info@baitech.com.tr" className="notranslate hover:text-ink">
+                  info@baitech.com.tr
+                </a>
+              </li>
+              <li>
+                <a href="tel:+905323694564" className="notranslate hover:text-ink">
+                  +90 532 369 4564
+                </a>
+              </li>
+              <li className="text-ink-2">
+                Tekstil OSB Mah. 204. Cd. No:566/103
+                <br />
+                Merkez Uşak
+              </li>
+            </ul>
+          </FooterGroup>
+
+          <FooterGroup title="Çözümler">
+            <ul className="space-y-2.5 text-[15px] text-ink-2">
+              <li>Akıllı Otomasyon</li>
+              <li>Veri Analizi</li>
+              <li>Müşteri Deneyimi</li>
+              <li>Yönetim Sistemleri</li>
+              <li>E-Ticaret Çözümleri</li>
+            </ul>
+          </FooterGroup>
+
+          <FooterGroup title="Projeler">
+            <ul className="space-y-2.5 text-[15px] text-ink-2">
+              <li className="notranslate">ChatEKG</li>
+              <li className="notranslate">GymBot</li>
+              <li className="notranslate">Çetin Group App</li>
+            </ul>
+          </FooterGroup>
+
+          <FooterGroup title="Yasal">
+            <ul className="space-y-2.5 text-[15px] text-ink-2">
+              {legalLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="transition-colors hover:text-ink">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={openSettings}
+                  className="text-left text-ink-2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:text-ink hover:decoration-ink"
+                >
+                  Çerez Tercihleri
+                </button>
+              </li>
+            </ul>
+          </FooterGroup>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col gap-3 border-t border-rule pt-8 text-[13px] text-ink-3 md:flex-row md:items-center md:justify-between">
+          <p>
+            © <span className="notranslate">2025 BAI TECHNOLOGY</span>. Tüm hakları saklıdır.
+          </p>
+          <p className="notranslate font-mono text-[10px] uppercase tracking-mono">
+            baitech.com.tr · Edition 001
+          </p>
         </div>
       </div>
     </footer>
+  )
+}
+
+function FooterGroup({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-3">— {title}</h3>
+      {children}
+    </div>
   )
 }
