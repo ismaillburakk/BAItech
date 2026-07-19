@@ -7,15 +7,15 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "Hakkımızda",
   description:
-    "BAI Technology; Uşak Zafer Teknopark'ta konumlanan, kendi yapay zeka modellerini geliştiren yazılım firması. Ekibimizi ve çalışma yaklaşımımızı tanıyın.",
+    "BAI Technology; Zafer Teknopark'ta konumlanan, kendi yapay zeka modellerini geliştiren yazılım firması. Ekibimizi ve çalışma yaklaşımımızı tanıyın.",
   path: "/hakkimizda",
 })
 
 // Teknopark, Ar-Ge ve kuruluş hikayesi — içerik derinliği.
 const aboutDepth = [
   {
-    heading: "Uşak Zafer Teknopark'ta Ar-Ge odaklı çalışma",
-    body: "BAI Technology — Türkçe kullanımıyla BAI Teknoloji, kısa adıyla BAI — Uşak Zafer Teknopark bünyesinde faaliyet gösterir. Teknopark statüsü, firmanın yalnızca proje teslim eden bir yazılım evi değil, Ar-Ge odaklı bir ekip olarak çalışmasını sağlar. Bu ortam, üniversite-sanayi yakınlığı ve teknoloji geliştirmeye ayrılmış bir zemin sunar; günlük müşteri işlerinin yanında araştırma ve model geliştirme çalışmalarını sürdürmeyi mümkün kılar.",
+    heading: "Zafer Teknopark'ta Ar-Ge odaklı çalışma",
+    body: "BAI Technology — Türkçe kullanımıyla BAI Teknoloji, kısa adıyla BAI — Zafer Teknopark bünyesinde faaliyet gösterir. Teknopark statüsü, firmanın yalnızca proje teslim eden bir yazılım evi değil, Ar-Ge odaklı bir ekip olarak çalışmasını sağlar. Bu ortam, üniversite-sanayi yakınlığı ve teknoloji geliştirmeye ayrılmış bir zemin sunar; günlük müşteri işlerinin yanında araştırma ve model geliştirme çalışmalarını sürdürmeyi mümkün kılar.",
   },
   {
     heading: "Kendi yapay zeka modellerimizi geliştiriyoruz",
@@ -23,7 +23,7 @@ const aboutDepth = [
   },
   {
     heading: "Ürün geliştiren bir ekip",
-    body: "2024'te kurulan BAI Technology, kısa sürede App Store ve Google Play'de yayında ürünlere ulaştı. Bir uygulamayı yayına almak, mağaza süreçlerini geçmek ve gerçek kullanıcılarla yaşatmak, ajans işlerinden farklı bir disiplin gerektirir; bu deneyimi bizzat edindik. Aynı ekip; işletmelere özel yazılım, e-ticaret altyapısı ve kurumsal web projeleri de geliştirir. Amacımız, teslim edilip unutulan değil, kullanıldıkça gelişen yazılımlar üretmektir.",
+    body: "2025'te kurulan BAI Technology, kısa sürede App Store ve Google Play'de yayında ürünlere ulaştı. Bir uygulamayı yayına almak, mağaza süreçlerini geçmek ve gerçek kullanıcılarla yaşatmak, ajans işlerinden farklı bir disiplin gerektirir; bu deneyimi bizzat edindik. Aynı ekip; işletmelere özel yazılım, e-ticaret altyapısı ve kurumsal web projeleri de geliştirir. Amacımız, teslim edilip unutulan değil, kullanıldıkça gelişen yazılımlar üretmektir.",
   },
 ]
 

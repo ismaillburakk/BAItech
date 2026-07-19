@@ -12,16 +12,6 @@ import {
 import { getProject, getProjectDisplayIndex, projects } from "@/lib/projects"
 import { pageMetadata } from "@/lib/seo"
 
-// Proje → ilgili lokasyon-hizmet sayfası (iç linkleme; doğal anchor).
-const RELATED_SERVICE: Record<string, { href: string; label: string }> = {
-  baseline: { href: "/usak-mobil-uygulama-gelistirme", label: "Uşak mobil uygulama geliştirme" },
-  bukira: { href: "/usak-mobil-uygulama-gelistirme", label: "Uşak mobil uygulama geliştirme" },
-  gymbot: { href: "/usak-yapay-zeka", label: "Uşak yapay zeka çözümleri" },
-  dukan: { href: "/usak-e-ticaret-altyapisi", label: "Uşak e-ticaret altyapısı" },
-  "isletmelere-ozel-yazilim": { href: "/usak-ozel-yazilim", label: "Uşak özel yazılım" },
-  chatekg: { href: "/usak-yapay-zeka", label: "Uşak yapay zeka çözümleri" },
-}
-
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }))
 }
@@ -90,19 +80,6 @@ export default function ProjeDetayPage({
               </div>
               <ProjectGallery tabs={project.gallery.tabs} />
             </div>
-          )}
-
-          {/* İlgili hizmet — proje → lokasyon-hizmet iç linki */}
-          {RELATED_SERVICE[project.slug] && (
-            <p className="mt-12 max-w-[720px] border-t border-rule pt-6 text-[15px] leading-relaxed text-ink-2">
-              İlgili hizmet:{" "}
-              <Link
-                href={RELATED_SERVICE[project.slug].href}
-                className="underline underline-offset-2 hover:text-ink"
-              >
-                {RELATED_SERVICE[project.slug].label} hizmetlerimiz
-              </Link>
-            </p>
           )}
         </div>
       </section>

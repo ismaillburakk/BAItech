@@ -29,19 +29,6 @@ const legalLinks = [
   { href: "/cerez-politikasi", label: "Çerez Politikası" },
 ]
 
-// Lokasyon-hizmet sayfaları — site geneli erişim (orphan sayfa kalmasın).
-const serviceAreas = [
-  { href: "/usak-yazilim-firmasi", label: "Uşak Yazılım Firması" },
-  { href: "/usak-mobil-uygulama-gelistirme", label: "Uşak Mobil Uygulama" },
-  { href: "/usak-web-yazilim", label: "Uşak Web Yazılım" },
-  { href: "/usak-e-ticaret-altyapisi", label: "Uşak E-Ticaret" },
-  { href: "/usak-yapay-zeka", label: "Uşak Yapay Zeka" },
-  { href: "/usak-ozel-yazilim", label: "Uşak Özel Yazılım" },
-  { href: "/ege-yazilim-firmasi", label: "Ege Bölgesi" },
-  { href: "/izmir-yazilim-mobil-uygulama", label: "İzmir Yazılım" },
-  { href: "/denizli-yazilim-mobil-uygulama", label: "Denizli Yazılım" },
-]
-
 export function Footer() {
   const { openSettings } = useConsent()
 
@@ -79,7 +66,7 @@ export function Footer() {
         </div>
 
         {/* Link groups */}
-        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <FooterGroup title="Hızlı Linkler">
             <ul className="space-y-2.5">
               {quickLinks.map((l) => (
@@ -133,18 +120,6 @@ export function Footer() {
                 <li key={p.href} className={p.brand ? "notranslate" : undefined}>
                   <Link href={p.href} className="transition-colors hover:text-ink">
                     {p.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </FooterGroup>
-
-          <FooterGroup title="Hizmet Bölgeleri">
-            <ul className="space-y-2.5 text-[15px] text-ink-2">
-              {serviceAreas.map((a) => (
-                <li key={a.href}>
-                  <Link href={a.href} className="transition-colors hover:text-ink">
-                    {a.label}
                   </Link>
                 </li>
               ))}

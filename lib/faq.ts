@@ -4,7 +4,7 @@ export type FaqItem = { question: string; answer: string }
 // bu listeden beslenir.
 export const faqItems: FaqItem[] = [
   {
-    question: "Uşak'ta mobil uygulama geliştirme maliyeti nedir?",
+    question: "Mobil uygulama geliştirme maliyeti nedir?",
     answer:
       "Maliyet, uygulamanın kapsamına göre değişir: hedeflenen platformlar (iOS, Android), ekran sayısı, ödeme veya harita gibi entegrasyonlar ve yapay zeka bileşenleri belirleyici kalemlerdir. Sabit bir liste fiyatı vermek yerine, ihtiyaç görüşmesinin ardından net bir kapsam ve teklif sunarız.",
   },
@@ -29,9 +29,9 @@ export const faqItems: FaqItem[] = [
       "Hazır servisler genel amaçlıdır; probleminize özel isabet ve veri kontrolü sunmaz. Kendi modelimizi eğittiğimizde hem daha doğru sonuçlar alırız hem de özellikle sağlık gibi alanlarda kararın neye dayandığını (açıklanabilirlik) gösterebiliriz.",
   },
   {
-    question: "Uşak dışındaki işletmelerle çalışıyor musunuz?",
+    question: "Farklı şehirlerdeki işletmelerle çalışıyor musunuz?",
     answer:
-      "Evet. Uşak merkezliyiz ve hizmetlerimizi başta İzmir, Denizli, Manisa ve Afyonkarahisar olmak üzere Ege bölgesine ve Türkiye geneline sunuyoruz. Projelerin büyük kısmı uzaktan yürütülür; kritik aşamalarda yerinde buluşuruz.",
+      "Evet. Projelerin büyük kısmı uzaktan yürütülür; Türkiye genelindeki işletmelerle çalışıyoruz. Kritik aşamalarda yüz yüze görüşür, gerektiğinde yerinde buluşuruz.",
   },
   {
     question: "Uygulamayı App Store ve Google Play'de yayınlıyor musunuz?",
@@ -41,7 +41,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Teslimden sonra bakım ve destek veriyor musunuz?",
     answer:
-      "Evet. Yazılım yayına alınınca bitmez; güncellemeler, güvenlik yamaları ve yeni ihtiyaçlara göre geliştirmeler için destek veririz. Uşak'ta aynı bölgede olmak bu desteği hızlı yürütmeyi kolaylaştırır.",
+      "Evet. Yazılım yayına alınınca bitmez; güncellemeler, güvenlik yamaları ve yeni ihtiyaçlara göre geliştirmeler için destek veririz.",
   },
   {
     question: "İşletmeme hazır paket mi, özel yazılım mı uygun?",

@@ -32,8 +32,8 @@ const organization = {
   },
   image: `${BASE_URL}/bai-logo-512.png`,
   description:
-    "Uşak merkezli yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret altyapısı ve özel yazılım geliştirir; App Store ve Google Play'de yayında ürünlere sahiptir.",
-  foundingDate: "2024",
+    "Yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret altyapısı ve özel yazılım geliştirir; App Store ve Google Play'de yayında ürünlere sahiptir.",
+  foundingDate: "2025",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Tekstil OSB Mahallesi 204. Cadde No:566/103",
@@ -83,14 +83,7 @@ const organization = {
       availableLanguage: ["Turkish", "English"],
     },
   ],
-  areaServed: [
-    { "@type": "City", name: "Uşak" },
-    { "@type": "City", name: "İzmir" },
-    { "@type": "City", name: "Denizli" },
-    { "@type": "City", name: "Manisa" },
-    { "@type": "City", name: "Afyonkarahisar" },
-    { "@type": "Country", name: "Türkiye" },
-  ],
+  areaServed: { "@type": "Country", name: "Türkiye" },
   knowsAbout: [
     "Yapay Zeka",
     "Makine Öğrenmesi",
@@ -112,7 +105,7 @@ const website = {
   alternateName: ["BAI", "BAI Teknoloji", "baitech"],
   url: BASE_URL,
   description:
-    "Uşak merkezli yazılım ve yapay zeka firması BAI Technology (BAI Teknoloji). Mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım.",
+    "Yazılım ve yapay zeka firması BAI Technology (BAI Teknoloji). Mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım.",
   inLanguage: "tr-TR",
   publisher: { "@id": `${BASE_URL}/#organization` },
   // Not: potentialAction/SearchAction kaldırıldı — sitede gerçek bir arama

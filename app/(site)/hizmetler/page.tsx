@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { PageCta } from "@/components/page-cta"
 import { ServicesSection } from "@/components/services-section"
 import {
@@ -9,19 +8,6 @@ import {
 } from "@/components/structured-data"
 import { faqItems } from "@/lib/faq"
 import { pageMetadata } from "@/lib/seo"
-
-// Hizmet → lokasyon-hizmet sayfaları iç linkleri (doğal, keyword içeren anchor).
-const serviceAreaLinks = [
-  { href: "/usak-yazilim-firmasi", label: "Uşak yazılım firması" },
-  { href: "/usak-mobil-uygulama-gelistirme", label: "Uşak mobil uygulama geliştirme" },
-  { href: "/usak-web-yazilim", label: "Uşak web yazılım" },
-  { href: "/usak-e-ticaret-altyapisi", label: "Uşak e-ticaret altyapısı" },
-  { href: "/usak-yapay-zeka", label: "Uşak yapay zeka çözümleri" },
-  { href: "/usak-ozel-yazilim", label: "Uşak özel yazılım" },
-  { href: "/ege-yazilim-firmasi", label: "Ege bölgesi yazılım firması" },
-  { href: "/izmir-yazilim-mobil-uygulama", label: "İzmir yazılım ve mobil uygulama" },
-  { href: "/denizli-yazilim-mobil-uygulama", label: "Denizli yazılım ve mobil uygulama" },
-]
 
 // Somut hizmetlerin detayı — süreç, teknoloji ve çıktı odaklı.
 const serviceDetails = [
@@ -50,7 +36,7 @@ const serviceDetails = [
 export const metadata: Metadata = pageMetadata({
   title: "Yazılım ve Yapay Zeka Hizmetleri",
   description:
-    "Uşak merkezli BAI Technology'nin hizmetleri: mobil uygulama geliştirme, web yazılım, e-ticaret altyapısı, işletmeye özel yazılım ve yapay zeka modelleri.",
+    "BAI Technology'nin hizmetleri: mobil uygulama geliştirme, web yazılım, e-ticaret altyapısı, işletmeye özel yazılım ve yapay zeka modelleri.",
   path: "/hizmetler",
 })
 
@@ -86,37 +72,6 @@ export default function HizmetlerPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Hizmet bölgeleri — lokasyon-hizmet sayfalarına iç link */}
-      <section className="pb-8 md:pb-12">
-        <div className="wrap">
-          <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
-              — Hizmet Bölgeleri
-            </span>
-            <span className="hidden h-px w-10 bg-rule sm:block" />
-          </div>
-          <p className="max-w-2xl text-[16px] leading-relaxed text-ink-2">
-            Uşak merkezli çalışıyor, hizmetlerimizi Ege bölgesine sunuyoruz. Bölgeye özel
-            sayfalarımızdan ihtiyacınıza en yakın olanı inceleyebilirsiniz:
-          </p>
-          <ul className="mt-6 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {serviceAreaLinks.map((a) => (
-              <li key={a.href}>
-                <Link
-                  href={a.href}
-                  className="group inline-flex items-center gap-2 text-[15px] text-ink-2 transition-colors hover:text-ink"
-                >
-                  <span aria-hidden="true" className="font-mono text-ink-3">
-                    →
-                  </span>
-                  {a.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

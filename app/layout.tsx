@@ -31,21 +31,17 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
+    default: "BAI Technology — Yazılım ve Yapay Zeka Firması",
     template: "%s | BAI Technology",
   },
   description:
-    "Uşak merkezli yazılım ve yapay zeka firması BAI Technology; mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım geliştirir.",
+    "Yazılım ve yapay zeka firması BAI Technology; mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım geliştirir.",
   keywords: [
-    "Uşak yazılım firması",
-    "Uşak mobil uygulama geliştirme",
-    "Uşak web yazılım",
-    "Uşak e-ticaret altyapısı",
-    "Uşak yapay zeka",
-    "Uşak özel yazılım",
-    "Ege bölgesi yazılım firması",
     "mobil uygulama geliştirme",
+    "web yazılım geliştirme",
     "yapay zeka model geliştirme",
+    "e-ticaret altyapısı",
+    "işletmeye özel yazılım",
     "BAI Technology",
     "BAI Teknoloji",
     "BAI",
@@ -65,9 +61,9 @@ export const metadata: Metadata = {
     languages: { "tr-TR": "/" },
   },
   openGraph: {
-    title: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
+    title: "BAI Technology — Yazılım ve Yapay Zeka Firması",
     description:
-      "Uşak merkezli yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım; App Store ve Google Play'de yayında ürünler.",
+      "Yazılım ve yapay zeka firması BAI Technology. Mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım; App Store ve Google Play'de yayında ürünler.",
     url: "https://baitech.com.tr",
     siteName: "BAI Technology",
     locale: "tr_TR",
@@ -77,15 +73,15 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "BAI Technology — Uşak yazılım ve yapay zeka firması",
+        alt: "BAI Technology — Yazılım ve Yapay Zeka Firması",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
+    title: "BAI Technology — Yazılım ve Yapay Zeka Firması",
     description:
-      "Uşak merkezli yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret ve işletmeye özel yazılım geliştiriyoruz.",
+      "Yazılım ve yapay zeka firması BAI Technology. Mobil uygulama, web yazılım, e-ticaret ve işletmeye özel yazılım geliştiriyoruz.",
     images: ["/og-image.png"],
   },
   robots: {

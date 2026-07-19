@@ -83,7 +83,7 @@ export function HeroSection() {
             <div className="mt-14 grid grid-cols-3 gap-6 border-t border-rule pt-6 max-w-md">
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Konum</div>
-                <div className="notranslate mt-1 font-serif text-lg text-ink">Uşak / TR</div>
+                <div className="notranslate mt-1 font-serif text-lg text-ink">Türkiye</div>
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Odak</div>

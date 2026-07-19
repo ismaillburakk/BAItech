@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "İletişim",
   description:
-    "Uşak'ta yazılım, mobil uygulama veya yapay zeka projeniz için BAI Technology ile iletişime geçin. E-posta, telefon ve iletişim formu.",
+    "Yazılım, mobil uygulama veya yapay zeka projeniz için BAI Technology ile iletişime geçin. E-posta, telefon ve iletişim formu.",
   path: "/iletisim",
 })
 
