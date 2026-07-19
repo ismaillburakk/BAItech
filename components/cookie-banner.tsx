@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { X } from "lucide-react"
 import { useConsent } from "@/components/consent-context"
+import { useFocusTrap } from "@/hooks/use-focus-trap"
 
 export function CookieBanner() {
   const { consent, acceptAll, rejectNonEssential, savePreferences, isSettingsOpen, openSettings, closeSettings } =
@@ -18,6 +19,16 @@ export function CookieBanner() {
   useEffect(() => {
     setFunctional(consent.functional)
   }, [consent.functional])
+
+  // Ayar modalı açıkken arka plan kaydırılamaz (mobil menüyle aynı davranış).
+  useEffect(() => {
+    if (isSettingsOpen) document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isSettingsOpen])
+
+  const settingsTrapRef = useFocusTrap<HTMLDivElement>(isSettingsOpen, closeSettings)
 
   if (!mounted) return null
 
@@ -42,7 +53,7 @@ export function CookieBanner() {
                 type="button"
                 onClick={rejectNonEssential}
                 aria-label="Çerez bandını kapat ve isteğe bağlı çerezleri reddet"
-                className="-mr-2 -mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-ink-3 hover:text-ink"
+                className="-mr-2 -mt-2 inline-flex h-11 w-11 items-center justify-center rounded-sm text-ink-3 hover:text-ink"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -67,21 +78,21 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={acceptAll}
-                className="rounded-pill bg-ink px-4 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-pill bg-ink px-4 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px"
               >
                 Tümünü Kabul Et
               </button>
               <button
                 type="button"
                 onClick={rejectNonEssential}
-                className="rounded-pill border border-rule px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-bg-elev"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-pill border border-rule px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-bg-elev"
               >
                 Reddet
               </button>
               <button
                 type="button"
                 onClick={openSettings}
-                className="rounded-pill px-4 py-2 text-[13px] font-medium text-ink-2 underline underline-offset-2 hover:text-ink"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-pill px-4 py-2 text-[13px] font-medium text-ink-2 underline underline-offset-2 hover:text-ink"
               >
                 Tercihler
               </button>
@@ -99,6 +110,7 @@ export function CookieBanner() {
           onClick={closeSettings}
         >
           <div
+            ref={settingsTrapRef}
             className="w-full max-w-lg rounded-md border border-rule bg-paper p-6 md:p-8"
             onClick={(e) => e.stopPropagation()}
           >
@@ -152,7 +164,7 @@ export function CookieBanner() {
                       çerezleri kabul ettiğinizde IP adresiniz Google sunucularına gönderilebilir.
                     </p>
                   </div>
-                  <label className="inline-flex shrink-0 cursor-pointer items-center gap-2">
+                  <label className="inline-flex min-h-[44px] shrink-0 cursor-pointer items-center gap-2">
                     <span className="sr-only">Fonksiyonel çerezleri etkinleştir</span>
                     <span
                       className={`relative inline-flex h-6 w-11 rounded-full border transition-colors ${
@@ -180,14 +192,14 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={() => savePreferences({ functional: false })}
-                className="rounded-pill border border-rule px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-bg-elev"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-pill border border-rule px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-bg-elev"
               >
                 Yalnızca Zorunlu
               </button>
               <button
                 type="button"
                 onClick={() => savePreferences({ functional })}
-                className="rounded-pill bg-ink px-5 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-pill bg-ink px-5 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px"
               >
                 Tercihimi Kaydet
               </button>

@@ -1,23 +1,27 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { useFocusTrap } from "@/hooks/use-focus-trap"
 
 const navItems = [
-  { href: "#home", label: "Ana Sayfa" },
-  { href: "#services", label: "Hizmetler" },
-  { href: "#projects", label: "Projeler" },
-  { href: "#about", label: "Hakkımızda" },
-  { href: "#contact", label: "İletişim" },
+  { href: "/", label: "Ana Sayfa" },
+  { href: "/hizmetler", label: "Hizmetler" },
+  { href: "/projeler", label: "Projeler" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/iletisim", label: "İletişim" },
 ]
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     setMounted(true)
@@ -34,11 +38,11 @@ export function Header() {
     }
   }, [isMobileMenuOpen])
 
-  const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: "smooth" })
-  }
+  const isCurrent = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)
+
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
+  const menuTrapRef = useFocusTrap<HTMLDivElement>(isMobileMenuOpen, closeMobileMenu)
 
   return (
     <>
@@ -49,8 +53,8 @@ export function Header() {
       >
         <div className="wrap flex h-16 items-center justify-between md:h-20">
           {/* Brand */}
-          <button
-            onClick={() => handleNavClick("#home")}
+          <Link
+            href="/"
             className="-ml-1 flex h-11 items-center gap-3 px-1 text-left"
             aria-label="Ana sayfaya git"
           >
@@ -68,23 +72,24 @@ export function Header() {
               <span className="notranslate font-serif text-[17px] tracking-tight text-ink">
                 BAI Technology
               </span>
-              <span className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
-                AI Solutions for Business
+              <span className="font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                Yazılım ve Yapay Zeka
               </span>
             </span>
-          </button>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-8 md:flex" aria-label="Ana navigasyon">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.href}
-                onClick={() => handleNavClick(item.href)}
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
                 className="group relative text-[14px] text-ink-2 transition-colors hover:text-ink"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-ink transition-transform duration-300 group-hover:scale-x-100" />
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -93,13 +98,13 @@ export function Header() {
             <div className="hidden md:block">
               <ThemeToggle />
             </div>
-            <button
-              onClick={() => handleNavClick("#contact")}
+            <Link
+              href="/iletisim"
               className="hidden rounded-pill bg-ink px-4 py-2 text-[13px] font-medium text-bg transition-transform hover:-translate-y-px sm:inline-flex"
               aria-label="İletişime geç"
             >
               İletişime Geç →
-            </button>
+            </Link>
             <button
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-rule text-ink md:hidden"
@@ -116,6 +121,7 @@ export function Header() {
         isMobileMenuOpen &&
         createPortal(
           <div
+            ref={menuTrapRef}
             className="fixed inset-0 z-[60] flex flex-col bg-bg md:hidden"
             role="dialog"
             aria-modal="true"
@@ -123,8 +129,9 @@ export function Header() {
           >
             {/* Replicated top bar so it's clear the menu owns the viewport */}
             <div className="wrap flex h-16 items-center justify-between border-b border-rule">
-              <button
-                onClick={() => handleNavClick("#home")}
+              <Link
+                href="/"
+                onClick={closeMobileMenu}
                 className="flex items-center gap-3"
                 aria-label="Ana sayfaya git"
               >
@@ -138,9 +145,9 @@ export function Header() {
                 <span className="notranslate font-serif text-[16px] tracking-tight text-ink">
                   BAI Technology
                 </span>
-              </button>
+              </Link>
               <button
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-rule text-ink"
                 aria-label="Menüyü kapat"
               >
@@ -155,27 +162,30 @@ export function Header() {
               <ul className="flex flex-col">
                 {navItems.map((item, i) => (
                   <li key={item.href}>
-                    <button
-                      onClick={() => handleNavClick(item.href)}
+                    <Link
+                      href={item.href}
+                      onClick={closeMobileMenu}
+                      aria-current={isCurrent(item.href) ? "page" : undefined}
                       className="flex w-full items-center justify-between border-b border-rule-2 py-5 text-left"
                     >
                       <span className="font-serif text-2xl text-ink">{item.label}</span>
                       <span className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
 
               <div className="mt-8 flex items-center justify-between">
                 <ThemeToggle />
-                <button
-                  onClick={() => handleNavClick("#contact")}
+                <Link
+                  href="/iletisim"
+                  onClick={closeMobileMenu}
                   className="rounded-pill bg-ink px-5 py-2.5 text-sm font-medium text-bg"
                 >
                   İletişime Geç →
-                </button>
+                </Link>
               </div>
             </nav>
           </div>,

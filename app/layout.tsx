@@ -31,70 +31,25 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "BAI Technology - Yapay Zeka ve Özel Yazılım Çözümleri",
+    default: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
     template: "%s | BAI Technology",
   },
   description:
-    "BAI Technology — yapay zeka destekli özel yazılım çözümleri. ChatEKG (XAI tabanlı EKG analizi), GymBot (AI antrenör), Baseline (tenis kulübü rezervasyon platformu — App Store / Play Store), Çetin Group App (inşaat yönetimi), web ve mobil yönetim sistemleri, e-ticaret altyapıları.",
+    "Uşak merkezli yazılım ve yapay zeka firması BAI Technology; mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım geliştirir.",
   keywords: [
-    // Brand & general
+    "Uşak yazılım firması",
+    "Uşak mobil uygulama geliştirme",
+    "Uşak web yazılım",
+    "Uşak e-ticaret altyapısı",
+    "Uşak yapay zeka",
+    "Uşak özel yazılım",
+    "Ege bölgesi yazılım firması",
+    "mobil uygulama geliştirme",
+    "yapay zeka model geliştirme",
     "BAI Technology",
     "BAI Teknoloji",
+    "BAI",
     "baitech",
-    "yapay zeka",
-    "AI çözümleri",
-    "özel yazılım",
-    "yazılım geliştirme",
-    "makine öğrenmesi",
-    "derin öğrenme",
-    "iş süreçleri otomasyonu",
-    "akıllı otomasyon",
-    "veri analizi",
-    "chatbot",
-    "müşteri deneyimi",
-    // ChatEKG
-    "ChatEKG",
-    "EKG analizi",
-    "yapay zeka EKG",
-    "açıklanabilir yapay zeka",
-    "XAI",
-    "sağlık teknolojisi",
-    "klinik karar destek",
-    // GymBot
-    "GymBot",
-    "spor uygulaması",
-    "AI antrenör",
-    "hareket analizi",
-    "Pose AI",
-    "fitness uygulaması",
-    "diyet uygulaması",
-    // Baseline
-    "Baseline",
-    "Baseline tenis",
-    "Baseline app",
-    "tenis uygulaması",
-    "tenis kort rezervasyon",
-    "tenis kulübü yönetim",
-    "tenis antrenör platformu",
-    "kort rezervasyon uygulaması",
-    "tenis ekipmanı pazaryeri",
-    // Çetin Group App
-    "Çetin Group App",
-    "inşaat yönetim sistemi",
-    "saha yönetim uygulaması",
-    // E-Ticaret
-    "e-ticaret",
-    "online satış sistemi",
-    "özelleştirilmiş e-ticaret",
-    // Platform
-    "iOS uygulama",
-    "Android uygulama",
-    "mobil uygulama",
-    "web yazılım",
-    "yönetim sistemi",
-    // Location
-    "Uşak yazılım",
-    "Türkiye AI",
   ],
   authors: [{ name: "BAI Technology" }],
   creator: "BAI Technology",
@@ -107,30 +62,31 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://baitech.com.tr"),
   alternates: {
     canonical: "/",
+    languages: { "tr-TR": "/" },
   },
   openGraph: {
-    title: "BAI Technology — Yapay Zeka ve Özel Yazılım Çözümleri",
+    title: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
     description:
-      "ChatEKG (XAI tabanlı EKG analizi), GymBot (AI antrenör), Baseline (tenis kulübü rezervasyon platformu, App Store + Play Store'da yayında), Çetin Group App (inşaat yönetimi), web ve mobil yönetim sistemleri, özelleştirilmiş e-ticaret altyapıları.",
+      "Uşak merkezli yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret altyapısı ve işletmeye özel yazılım; App Store ve Google Play'de yayında ürünler.",
     url: "https://baitech.com.tr",
     siteName: "BAI Technology",
     locale: "tr_TR",
     type: "website",
     images: [
       {
-        url: "/bai-logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "BAI Technology — Yapay Zeka ve Özel Yazılım Çözümleri",
+        alt: "BAI Technology — Uşak yazılım ve yapay zeka firması",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BAI Technology — Yapay Zeka ve Özel Yazılım Çözümleri",
+    title: "Uşak Yazılım ve Yapay Zeka Firması — BAI Technology",
     description:
-      "ChatEKG, GymBot, Baseline (tenis platformu — App Store + Play Store), Çetin Group App ve özelleştirilmiş yönetim & e-ticaret çözümleri.",
-    images: ["/bai-logo.png"],
+      "Uşak merkezli yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret ve işletmeye özel yazılım geliştiriyoruz.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -180,6 +136,7 @@ export default function RootLayout({
       lang="tr"
       data-theme="light"
       className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />

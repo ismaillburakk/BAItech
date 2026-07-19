@@ -1,9 +1,71 @@
 import { type NextRequest, NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
+// Transporter her istekte yeniden kurulmasın diye modül seviyesinde tembel tekil.
+let cachedTransporter: nodemailer.Transporter | null = null
+function getTransporter() {
+  if (!cachedTransporter) {
+    cachedTransporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_HOST_USER,
+        pass: process.env.EMAIL_HOST_PASSWORD,
+      },
+    })
+  }
+  return cachedTransporter
+}
+
+// Basit IP bazlı rate limit: dakikada en fazla 3 istek. Bellek içi tutulur;
+// sunucu yeniden başlayınca sıfırlanır (temel koruma — WAF yerine geçmez).
+const RATE_LIMIT = 3
+const RATE_WINDOW_MS = 60_000
+const requestLog = new Map<string, number[]>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entries = (requestLog.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS)
+  if (entries.length >= RATE_LIMIT) {
+    requestLog.set(ip, entries)
+    return true
+  }
+  entries.push(now)
+  requestLog.set(ip, entries)
+  // Map sınırsız büyümesin
+  if (requestLog.size > 1000) {
+    for (const [key, times] of requestLog) {
+      if (times.every((t) => now - t >= RATE_WINDOW_MS)) requestLog.delete(key)
+    }
+  }
+  return false
+}
+
+// Bot ihtimalinde istemciye "başarılı" dönülür ama mail gönderilmez —
+// bot, tuzağa yakalandığını öğrenmesin.
+const SILENT_OK = { success: true, message: "Mesajınız başarıyla gönderildi!" }
+
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, subject, message, consent, consentAt } = await request.json()
+    const { name, email, subject, message, consent, consentAt, website, elapsedMs } =
+      await request.json()
+
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown"
+
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { success: false, message: "Çok fazla deneme yapıldı. Lütfen bir dakika sonra tekrar deneyin." },
+        { status: 429 }
+      )
+    }
+
+    // Honeypot: görünmez "website" alanı dolduysa veya form 3 saniyeden kısa
+    // sürede gönderildiyse büyük olasılıkla bot — sessizce reddet.
+    if (website || (typeof elapsedMs === "number" && elapsedMs < 3000)) {
+      return NextResponse.json(SILENT_OK)
+    }
 
     if (!name || !email || !subject || !message) {
       return NextResponse.json({ success: false, message: "Tüm alanları doldurun" }, { status: 400 })
@@ -30,21 +92,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Capture audit-trail metadata for the KVKK consent record.
-    const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      request.headers.get("x-real-ip") ||
-      "unknown"
+    const ip = clientIp
     const userAgent = request.headers.get("user-agent") || "unknown"
     const consentTimestamp = typeof consentAt === "string" ? consentAt : new Date().toISOString()
 
-    // Create transporter using nodemailer
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_HOST_USER,
-        pass: process.env.EMAIL_HOST_PASSWORD,
-      },
-    })
+    const transporter = getTransporter()
 
     // Basic HTML escaping to prevent injection from form input
     const esc = (s: string) =>

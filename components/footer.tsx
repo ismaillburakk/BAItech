@@ -3,13 +3,24 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useConsent } from "@/components/consent-context"
+import { orderedProjects } from "@/lib/projects"
+import { services } from "@/lib/services"
+
+// Footer proje linkleri lib/projects.ts'ten türetilir (tek kaynak).
+// "İşletmelere Özel Yazılım" tanımlayıcı bir başlık olduğundan çeviriye açık;
+// marka adları (Baseline, Bukira, GymBot, Dukan, ChatEKG) notranslate kalır.
+const projectLinks = orderedProjects.map((p) => ({
+  href: `/projeler/${p.slug}`,
+  label: p.title,
+  brand: p.slug !== "isletmelere-ozel-yazilim",
+}))
 
 const quickLinks = [
-  { href: "#home", label: "Ana Sayfa" },
-  { href: "#services", label: "Hizmetler" },
-  { href: "#projects", label: "Projeler" },
-  { href: "#about", label: "Hakkımızda" },
-  { href: "#contact", label: "İletişim" },
+  { href: "/", label: "Ana Sayfa" },
+  { href: "/hizmetler", label: "Hizmetler" },
+  { href: "/projeler", label: "Projeler" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/iletisim", label: "İletişim" },
 ]
 
 const legalLinks = [
@@ -18,17 +29,21 @@ const legalLinks = [
   { href: "/cerez-politikasi", label: "Çerez Politikası" },
 ]
 
+// Lokasyon-hizmet sayfaları — site geneli erişim (orphan sayfa kalmasın).
+const serviceAreas = [
+  { href: "/usak-yazilim-firmasi", label: "Uşak Yazılım Firması" },
+  { href: "/usak-mobil-uygulama-gelistirme", label: "Uşak Mobil Uygulama" },
+  { href: "/usak-web-yazilim", label: "Uşak Web Yazılım" },
+  { href: "/usak-e-ticaret-altyapisi", label: "Uşak E-Ticaret" },
+  { href: "/usak-yapay-zeka", label: "Uşak Yapay Zeka" },
+  { href: "/usak-ozel-yazilim", label: "Uşak Özel Yazılım" },
+  { href: "/ege-yazilim-firmasi", label: "Ege Bölgesi" },
+  { href: "/izmir-yazilim-mobil-uygulama", label: "İzmir Yazılım" },
+  { href: "/denizli-yazilim-mobil-uygulama", label: "Denizli Yazılım" },
+]
+
 export function Footer() {
   const { openSettings } = useConsent()
-
-  const handleNavClick = (href: string) => {
-    if (href.startsWith("#")) {
-      const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: "smooth" })
-    } else {
-      window.location.href = href
-    }
-  }
 
   return (
     <footer className="border-t border-rule bg-bg">
@@ -46,8 +61,8 @@ export function Footer() {
               />
               <div className="leading-tight">
                 <div className="notranslate font-serif text-[20px] text-ink">BAI Technology</div>
-                <div className="notranslate font-mono text-[10px] uppercase tracking-mono text-ink-3">
-                  AI Solutions for Business
+                <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                  Yazılım ve Yapay Zeka
                 </div>
               </div>
             </div>
@@ -64,17 +79,17 @@ export function Footer() {
         </div>
 
         {/* Link groups */}
-        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-5">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           <FooterGroup title="Hızlı Linkler">
             <ul className="space-y-2.5">
               {quickLinks.map((l) => (
                 <li key={l.href}>
-                  <button
-                    onClick={() => handleNavClick(l.href)}
+                  <Link
+                    href={l.href}
                     className="text-[15px] text-ink-2 transition-colors hover:text-ink"
                   >
                     {l.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -102,19 +117,37 @@ export function Footer() {
 
           <FooterGroup title="Çözümler">
             <ul className="space-y-2.5 text-[15px] text-ink-2">
-              <li>Akıllı Otomasyon</li>
-              <li>Veri Analizi</li>
-              <li>Müşteri Deneyimi</li>
-              <li>Yönetim Sistemleri</li>
-              <li>E-Ticaret Çözümleri</li>
+              {services.map((s) => (
+                <li key={s.n}>
+                  <Link href="/hizmetler" className="transition-colors hover:text-ink">
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </FooterGroup>
 
           <FooterGroup title="Projeler">
             <ul className="space-y-2.5 text-[15px] text-ink-2">
-              <li className="notranslate">ChatEKG</li>
-              <li className="notranslate">GymBot</li>
-              <li className="notranslate">Çetin Group App</li>
+              {projectLinks.map((p) => (
+                <li key={p.href} className={p.brand ? "notranslate" : undefined}>
+                  <Link href={p.href} className="transition-colors hover:text-ink">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </FooterGroup>
+
+          <FooterGroup title="Hizmet Bölgeleri">
+            <ul className="space-y-2.5 text-[15px] text-ink-2">
+              {serviceAreas.map((a) => (
+                <li key={a.href}>
+                  <Link href={a.href} className="transition-colors hover:text-ink">
+                    {a.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </FooterGroup>
 
@@ -157,7 +190,9 @@ export function Footer() {
 function FooterGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-3">— {title}</h3>
+      {/* h2: footer, contentinfo landmark'ının üst düzey bölümleri — yalnızca h1
+          içeren sayfalarda (ör. /iletisim, detay) h1→h3 atlamasını önler. */}
+      <h2 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-3">— {title}</h2>
       {children}
     </div>
   )

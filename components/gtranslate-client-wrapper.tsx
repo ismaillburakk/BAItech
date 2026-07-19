@@ -43,6 +43,10 @@ export function GTranslateWrapper() {
   // If user declined functional cookies, we still render the empty container
   // so layout doesn't shift — the script just never injects content.
   return (
-    <div className="gtranslate_wrapper fixed bottom-[20px] right-[20px] z-40 h-[40px] w-[40px]" />
+    <div
+      className={`gtranslate_wrapper fixed bottom-[20px] right-[20px] z-40 h-[40px] w-[40px] ${
+        consent.functional ? "" : "pointer-events-none"
+      }`}
+    />
   )
 }

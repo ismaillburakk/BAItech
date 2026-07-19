@@ -9,7 +9,7 @@
     --paper: oklch(0.99 0.004 80);
     --ink: oklch(0.18 0.012 60);
     --ink-2: oklch(0.38 0.012 60);
-    --ink-3: oklch(0.58 0.010 60);
+    --ink-3: oklch(0.52 0.010 60); /* WCAG AA: bg-elev üstünde de ≥4.5:1 */
     --rule: oklch(0.88 0.010 60);
     --rule-2: oklch(0.93 0.008 60);
     --amber: oklch(0.66 0.155 55);
@@ -25,7 +25,7 @@
     --paper: oklch(0.185 0.013 60);
     --ink: oklch(0.97 0.008 80);
     --ink-2: oklch(0.78 0.012 70);
-    --ink-3: oklch(0.56 0.014 60);
+    --ink-3: oklch(0.64 0.014 60); /* WCAG AA: bg-elev üstünde de ≥4.5:1 */
     --rule: oklch(0.30 0.014 60);
     --rule-2: oklch(0.24 0.012 60);
     --amber: oklch(0.74 0.165 55);
@@ -42,7 +42,7 @@
   body {
     background-color: var(--bg);
     color: var(--ink);
-    font-family: "Manrope", system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -84,16 +84,8 @@
     }
   }
 
-  .eyebrow {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-
   .display {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: var(--font-serif), Georgia, serif;
     font-weight: 400;
     letter-spacing: -0.01em;
     line-height: 0.98;
@@ -115,25 +107,13 @@
     border-top: 1px dashed var(--rule-2);
   }
 
-  /* Carousel track — hide scrollbars while keeping the scrollable behaviour */
-  .carousel-track {
-    --carousel-pad: 28px;
+  /* Gallery track — hide scrollbars while keeping horizontal swipe/scroll */
+  .gallery-track {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  .carousel-track::-webkit-scrollbar {
+  .gallery-track::-webkit-scrollbar {
     display: none;
-  }
-  @media (min-width: 768px) {
-    .carousel-track {
-      --carousel-pad: 32px;
-    }
-  }
-  @media (min-width: 1392px) {
-    .carousel-track {
-      /* Center the track relative to the 1360px max-width wrap */
-      --carousel-pad: max(32px, calc((100vw - 1360px) / 2));
-    }
   }
 
   /* Striped gradient placeholder used for case-study images */
@@ -165,6 +145,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
     .reveal,
     .reveal.in {
       opacity: 1;
@@ -202,7 +185,7 @@
     margin-top: 1.2em;
   }
   .legal-body h2 {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: var(--font-serif), Georgia, serif;
     font-size: clamp(22px, 2.4vw, 30px);
     font-weight: 400;
     line-height: 1.15;
@@ -218,7 +201,7 @@
     border-top: 0;
   }
   .legal-body h3 {
-    font-family: "Manrope", system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--ink);
@@ -259,7 +242,7 @@
     position: absolute;
     left: 0;
     color: var(--ink-3);
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 13px;
   }
   .legal-body ol {
@@ -268,11 +251,18 @@
   .legal-body li + li {
     margin-top: 0.5em;
   }
+  /* Dar ekranlarda tablo taşmasın: sarmalayıcı yatay kayar, sayfa gövdesi taşmaz.
+     Masaüstünde tablo width:100% ile tam genişlikte kalır (görünüm değişmez). */
+  .legal-body .table-scroll {
+    margin: 1.4em 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .legal-body table {
     width: 100%;
+    min-width: 30rem;
     border-collapse: collapse;
     font-size: 14px;
-    margin: 1.4em 0;
   }
   .legal-body th,
   .legal-body td {
@@ -282,7 +272,7 @@
     vertical-align: top;
   }
   .legal-body th {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;

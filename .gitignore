@@ -18,6 +18,8 @@ yarn-error.log*
 
 # env files
 .env*
+# ...ama örnek şablon izlensin (gerçek değer içermez, belgeleme amaçlı)
+!.env.example
 
 # vercel
 .vercel

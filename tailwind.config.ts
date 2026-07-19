@@ -33,9 +33,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['"Instrument Serif"', "Georgia", "serif"],
-        sans: ['"Manrope"', "system-ui", "sans-serif"],
-        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+        // next/font aileleri hash'li adlarla kaydeder; onlara yalnızca bu
+        // değişkenler üzerinden erişilebilir (düz ad kullanmak fallback'e düşürür).
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
         sm: "8px",

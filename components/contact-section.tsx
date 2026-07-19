@@ -1,16 +1,25 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Link from "next/link"
 import { Check, Loader2, Send } from "lucide-react"
 import { toast } from "sonner"
 
-export function ContactSection() {
+export function ContactSection({
+  headingAs: Heading = "h2",
+}: {
+  /** Ayrık sayfada ana başlık h1 olur; görünüm aynı kalır (stiller class'lardan gelir). */
+  headingAs?: "h1" | "h2"
+} = {}) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [consent, setConsent] = useState(false)
   const [consentError, setConsentError] = useState(false)
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" })
+  // Spam koruması: görünmez honeypot alanı + formun açılış zamanı (3 sn'den
+  // hızlı gönderimler API tarafında sessizce reddedilir).
+  const [website, setWebsite] = useState("")
+  const formStartRef = useRef<number>(Date.now())
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,7 +35,13 @@ export function ContactSection() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, consent: true, consentAt: new Date().toISOString() }),
+        body: JSON.stringify({
+          ...formData,
+          consent: true,
+          consentAt: new Date().toISOString(),
+          website,
+          elapsedMs: Date.now() - formStartRef.current,
+        }),
       })
       const result = await response.json()
       if (result.success) {
@@ -84,10 +99,10 @@ export function ContactSection() {
                   Section 05
                 </span>
               </div>
-              <h2 className="display mt-6 text-[clamp(40px,5vw,76px)] text-ink">
+              <Heading className="display mt-6 text-[clamp(40px,5vw,76px)] text-ink">
                 İletişime{" "}
                 <span className="italic-amber">geçin.</span>
-              </h2>
+              </Heading>
               <p className="mt-6 max-w-md text-[16px] leading-relaxed text-ink-2">
                 AI çözümlerimiz hakkında daha fazla bilgi almak için bizimle iletişime geçin.
               </p>
@@ -134,12 +149,26 @@ export function ContactSection() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5" aria-label="İletişim formu">
+                {/* Honeypot — insanlar görmez/doldurmaz; botlar doldurursa API sessizce reddeder */}
+                <div className="sr-only" aria-hidden="true">
+                  <label htmlFor="website">Web siteniz</label>
+                  <input
+                    id="website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
                 <Field
                   label="Adınız ve Soyadınız"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Ad Soyad"
+                  autoComplete="name"
                   required
                 />
                 <Field
@@ -149,6 +178,8 @@ export function ContactSection() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="ornek@firma.com"
+                  autoComplete="email"
+                  inputMode="email"
                   required
                 />
                 <Field
@@ -174,7 +205,7 @@ export function ContactSection() {
                     onChange={handleChange}
                     placeholder="Mesajınızı yazın..."
                     required
-                    className="w-full resize-none border-b border-rule bg-transparent py-2 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink"
+                    className="w-full resize-none border-b border-rule bg-transparent py-2.5 text-[16px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink"
                   />
                 </div>
 
@@ -267,6 +298,8 @@ function Field({
   onChange,
   placeholder,
   required,
+  autoComplete,
+  inputMode,
 }: {
   label: string
   name: string
@@ -275,12 +308,16 @@ function Field({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
   required?: boolean
+  autoComplete?: string
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"]
 }) {
   return (
     <div className="space-y-2">
       <label htmlFor={name} className="block font-mono text-[10px] uppercase tracking-mono text-ink-3">
         {label}
       </label>
+      {/* text-[16px]: iOS Safari'de <16px yazı tipi odaklanınca otomatik yakınlaştırmayı
+          tetikler; 16px bunu önler. py-2.5 ile dokunma hedefi ~44px olur. */}
       <input
         id={name}
         type={type}
@@ -289,7 +326,9 @@ function Field({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="w-full border-b border-rule bg-transparent py-2 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink"
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        className="w-full border-b border-rule bg-transparent py-2.5 text-[16px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink"
       />
     </div>
   )

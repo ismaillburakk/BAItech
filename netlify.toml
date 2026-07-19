@@ -1,0 +1,27 @@
+# Netlify yapılandırması — BAI Technology (Next.js 14 App Router)
+# Next.js Runtime (@netlify/plugin-nextjs) SSR, API route'larını (Netlify
+# Functions) ve next/image optimizasyonunu (Netlify Image CDN) yönetir.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next 14.2 için güvenli LTS. Node 18 EOL olduğundan 20'ye sabitlendi.
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Güvenlik header'ları — tüm rotalara uygulanır.
+# CSP bilinçli olarak EKLENMEDİ: GTranslate (Google Translate) ve inline
+# script/font yüklemesi nedeniyle test edilmeden eklenirse site kırılabilir.
+# CSP eklenecekse Report-Only ile başlanmalı.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

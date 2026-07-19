@@ -1,11 +1,36 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
+  const figureRef = useRef<HTMLElement>(null)
+
+  // Pusula animasyonları viewport dışındayken durur — sayfa boşta sürekli
+  // render maliyeti taşımasın (denetim P5). reduced-motion zaten CSS'te kapalı.
+  useEffect(() => {
+    const figure = figureRef.current
+    if (!figure) return
+    const animated = figure.querySelectorAll<HTMLElement>(
+      ".animate-spin-slow, .animate-spin-reverse"
+    )
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        animated.forEach((el) => {
+          el.style.animationPlayState = entry.isIntersecting ? "running" : "paused"
+        })
+      },
+      { threshold: 0 }
+    )
+    io.observe(figure)
+    return () => io.disconnect()
+  }, [])
   const scrollTo = (sel: string) => {
     const el = document.querySelector(sel)
-    if (el) el.scrollIntoView({ behavior: "smooth" })
+    if (!el) return
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" })
   }
 
   return (
@@ -33,8 +58,8 @@ export function HeroSection() {
             </h1>
 
             <p className="mt-7 max-w-xl text-[17px] leading-relaxed text-ink-2 md:text-[18px]">
-              BAI TECHNOLOGY olarak, en son teknolojilerle işletmenizi dijital dönüşüm yolculuğunda
-              destekliyoruz.
+              BAI Technology olarak mobil uygulama, web ve özel yazılım geliştiriyoruz. Aynı zamanda
+              görüntü ve dil tabanlı yapay zeka modellerini kendimiz eğitiyoruz.
             </p>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -45,13 +70,13 @@ export function HeroSection() {
                 Ücretsiz Danışmanlık
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </button>
-              <button
-                onClick={() => scrollTo("#services")}
+              <Link
+                href="/hizmetler"
                 className="group inline-flex items-center justify-center gap-2 rounded-pill border border-rule px-6 py-3 text-[14px] font-medium text-ink transition-colors hover:bg-bg-elev"
               >
                 Çözümlerimizi Keşfedin
                 <span className="text-ink-3 transition-transform group-hover:translate-x-0.5">→</span>
-              </button>
+              </Link>
             </div>
 
             {/* Meta row */}
@@ -62,8 +87,8 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-mono text-ink-3">Odak</div>
-                <div className="notranslate mt-1 font-serif text-lg italic text-ink">
-                  AI · Software
+                <div className="mt-1 font-serif text-lg italic text-ink">
+                  Yazılım · AI
                 </div>
               </div>
               <div>
@@ -74,7 +99,7 @@ export function HeroSection() {
           </div>
 
           {/* Side figure */}
-          <figure className="reveal relative mx-auto w-full max-w-md">
+          <figure ref={figureRef} className="reveal relative mx-auto w-full max-w-md">
             <div className="relative aspect-[4/5] w-full rounded-md border border-rule bg-paper">
               {/* Corner ticks */}
               <CornerTicks />
@@ -112,7 +137,7 @@ export function HeroSection() {
                   <path d="M100 18 L114 100 L100 100 Z" fill="var(--amber)" opacity="0.85" />
                   {/* Cardinal letters */}
                   <g
-                    fontFamily="JetBrains Mono, monospace"
+                    style={{ fontFamily: "var(--font-mono), ui-monospace, monospace" }}
                     fontSize="9"
                     fill="currentColor"
                     opacity="0.6"
