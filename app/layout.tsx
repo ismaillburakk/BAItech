@@ -60,6 +60,14 @@ export const metadata: Metadata = {
     canonical: "/",
     languages: { "tr-TR": "/" },
   },
+  // Meta (Facebook) alan adı doğrulaması — Next Metadata API'nin verification.other
+  // alanı, etiketi SUNUCU tarafında her sayfanın <head>'ine basar (client-side
+  // enjeksiyon değil). Çıktı: <meta name="facebook-domain-verification" content="…" />
+  verification: {
+    other: {
+      "facebook-domain-verification": "zwi238kqp2mgrbk7zhik2l0e76nnc3",
+    },
+  },
   openGraph: {
     title: "BAI Technology — Yazılım ve Yapay Zeka Firması",
     description:
