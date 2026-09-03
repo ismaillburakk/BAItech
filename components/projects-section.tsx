@@ -28,7 +28,7 @@ export function ProjectsSection({
               <span className="italic-amber">çözümler</span>
             </>
           }
-          description="Farklı sektörlere özel, yenilikçi ve sürdürülebilir teknoloji çözümlerimiz."
+          description="Mobil uygulama, web ve işletmeye özel yazılım projelerimiz; App Store ve Google Play'de yayında olanlar dahil."
           headingAs={headingAs}
         />
 

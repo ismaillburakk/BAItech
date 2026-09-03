@@ -63,7 +63,7 @@ export function AboutSection({
               </span>
             </>
           }
-          description="Mobil uygulama, web ve özel yazılım geliştiren; kendi yapay zeka modellerini eğiten bir yazılım firmasıyız."
+          description="BAI Technology, 2025'te kurulan bir yazılım ve yapay zeka firmasıdır. Geliştirdiği uygulamalar App Store ve Google Play'de yayındadır."
           headingAs={headingAs}
         />
 

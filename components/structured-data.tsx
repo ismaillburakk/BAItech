@@ -32,8 +32,16 @@ const organization = {
   },
   image: `${BASE_URL}/bai-logo-512.png`,
   description:
-    "Yazılım ve yapay zeka firması. Mobil uygulama, web yazılım, e-ticaret altyapısı ve özel yazılım geliştirir; App Store ve Google Play'de yayında ürünlere sahiptir.",
+    "BAI Technology, 2025'te kurulan bir yazılım ve yapay zeka firmasıdır. Mobil uygulama, web ve işletmeye özel yazılım geliştirir; markalara e-ticaret altyapısı kurar. Görüntü ve dil tabanlı yapay zeka modellerini hazır servis kullanmadan kendisi eğitir. Baseline, Bukira ve GymBot uygulamaları App Store ve Google Play'de yayındadır.",
   foundingDate: "2025",
+  foundingLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Uşak",
+      addressCountry: "TR",
+    },
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "Tekstil OSB Mahallesi 204. Cadde No:566/103",
@@ -63,6 +71,9 @@ const organization = {
   // Sosyal medya profilleri hazır olduğunda buraya eklenmeli.
   sameAs: [
     "https://apps.apple.com/tr/app/baseline/id6762238661",
+    "https://play.google.com/store/apps/details?id=com.bai.baseline",
+    "https://apps.apple.com/tr/app/bukira/id6789983975",
+    "https://play.google.com/store/apps/details?id=com.bukira.admin",
     "https://apps.apple.com/tr/app/gymbot/id6784051250",
     "https://play.google.com/store/apps/details?id=com.gymbot.app",
   ],
@@ -84,15 +95,33 @@ const organization = {
     },
   ],
   areaServed: { "@type": "Country", name: "Türkiye" },
+  memberOf: {
+    "@type": "Organization",
+    name: "Zafer Teknopark",
+    alternateName: "Afyon Uşak Zafer Teknopark",
+    url: "https://www.zaferteknopark.com.tr",
+  },
+  // Uzmanlık alanları düz metin yerine Wikidata varlıklarına bağlanır; üretken
+  // motorlar ve arama motorları kavramı tekilleştirebilsin diye. Q-ID'ler
+  // Wikidata etiketleriyle doğrulandı; karşılığı teyit edilemeyen iki kalem
+  // (mobil uygulama geliştirme, iş süreçleri otomasyonu) düz metin bırakıldı.
   knowsAbout: [
-    "Yapay Zeka",
-    "Makine Öğrenmesi",
-    "Açıklanabilir Yapay Zeka",
-    "Doğal Dil İşleme",
-    "Görüntü İşleme",
+    { "@type": "Thing", name: "Yapay Zeka", sameAs: "https://www.wikidata.org/wiki/Q11660" },
+    { "@type": "Thing", name: "Makine Öğrenmesi", sameAs: "https://www.wikidata.org/wiki/Q2539" },
+    {
+      "@type": "Thing",
+      name: "Açıklanabilir Yapay Zeka",
+      sameAs: "https://www.wikidata.org/wiki/Q40890078",
+    },
+    {
+      "@type": "Thing",
+      name: "Doğal Dil İşleme",
+      sameAs: "https://www.wikidata.org/wiki/Q30642",
+    },
+    { "@type": "Thing", name: "Görüntü İşleme", sameAs: "https://www.wikidata.org/wiki/Q844240" },
+    { "@type": "Thing", name: "Web Geliştirme", sameAs: "https://www.wikidata.org/wiki/Q386275" },
+    { "@type": "Thing", name: "E-Ticaret", sameAs: "https://www.wikidata.org/wiki/Q484847" },
     "Mobil Uygulama Geliştirme",
-    "Web Geliştirme",
-    "E-Ticaret",
     "İş Süreçleri Otomasyonu",
   ],
 }

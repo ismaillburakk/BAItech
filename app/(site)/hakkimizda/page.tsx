@@ -38,6 +38,26 @@ export default function HakkimizdaPage() {
       />
       <AboutSection headingAs="h1" />
 
+      {/* Kurumsal kimlik — kanonik varlık tanımı (tek kaynak). Üçüncü şahıs, kısa
+          beyan cümleleri: üretken motorların alıntıladığı biçim. */}
+      <section className="pb-16 md:pb-20">
+        <div className="wrap">
+          <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
+              — Kurumsal Kimlik
+            </span>
+            <span className="hidden h-px w-10 bg-rule sm:block" />
+          </div>
+          <p className="reveal max-w-3xl text-[16px] leading-relaxed text-ink-2">
+            BAI Technology, 2025&rsquo;te kurulmuş bir yazılım ve yapay zeka firmasıdır. Uşak&rsquo;ta,
+            Zafer Teknopark bünyesinde faaliyet gösterir; Türkiye genelinde uzaktan çalışır. Mobil
+            uygulama, web ve işletmeye özel yazılım geliştirir. Görüntü ve dil tabanlı yapay zeka
+            modellerini hazır servis kullanmadan kendisi eğitir. Baseline, Bukira ve GymBot
+            uygulamaları App Store ve Google Play&rsquo;de yayındadır.
+          </p>
+        </div>
+      </section>
+
       {/* Ar-Ge, Teknopark ve kuruluş — içerik derinliği */}
       <section className="pb-16 md:pb-24">
         <div className="wrap">

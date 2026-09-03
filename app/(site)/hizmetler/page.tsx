@@ -16,7 +16,7 @@ const serviceDetails = [
     body: "iOS ve Android için native mobil uygulamalar geliştiriyoruz. Süreç; ihtiyaç analizi, akış tasarımı, native geliştirme, test ve mağaza yayınından oluşur. Ödeme entegrasyonu, anlık bildirim ve rol tabanlı kullanıcı yapıları proje başında planlanır. Çıktı, App Store ve Google Play'de yayınlanan ve bakımı sürdürülen bir uygulamadır.",
   },
   {
-    title: "Web Yazılım",
+    title: "Web Geliştirme",
     body: "Kurumsal web sitelerinden çok kullanıcılı yönetim panellerine kadar web yazılımı geliştiriyoruz. Sayfaların önceden oluşturulması, görsel optimizasyonu ve erişilebilirlik ilkeleriyle hızlı, mobil uyumlu ve arama motoru dostu sistemler kurarız. Çıktı; güncellenebilir, ölçeklenen ve gerçek iş akışlarını yürüten bir web uygulamasıdır.",
   },
   {
@@ -24,11 +24,11 @@ const serviceDetails = [
     body: "Markaya özel, tek kiracılı e-ticaret altyapıları kuruyoruz. Ürün, kategori, sepet ve ödeme akışı ile sipariş, stok ve kampanya yönetimi tek sistemde birleşir. Modern ödeme entegrasyonları ve sipariş takibi standarttır. Çıktı, kendi alan adı ve temasıyla çalışan bağımsız bir online mağazadır.",
   },
   {
-    title: "Yapay Zeka Çözümleri",
+    title: "Yapay Zeka Modelleri",
     body: "Hazır servisleri kullanmakla yetinmiyor, görüntü işleme ve doğal dil işleme üzerine kendi modellerimizi eğitiyoruz. Veri hazırlama, model eğitimi, doğruluk ölçümü ve ürüne güvenli entegrasyon sürecin adımlarıdır. Sağlık gibi hassas alanlarda kararın dayanağını gösteren açıklanabilir yapay zeka (XAI) yaklaşımını benimseriz.",
   },
   {
-    title: "İşletmeye Özel Yazılım",
+    title: "Özel Yazılım",
     body: "Hazır paketlerin çözemediği ihtiyaçlar için talebe özel yazılım geliştiriyoruz. Süreci yerinde inceler, çalışan bir ilk sürümü hızla ortaya koyar, kullanıcı geri bildirimiyle geliştiririz. Web ve mobil taraflar birlikte kurgulanır. Çıktı, ekibin gerçekten kullandığı ve zamanla gelişen bir sistemdir.",
   },
 ]
@@ -36,7 +36,7 @@ const serviceDetails = [
 export const metadata: Metadata = pageMetadata({
   title: "Yazılım ve Yapay Zeka Hizmetleri",
   description:
-    "BAI Technology'nin hizmetleri: mobil uygulama geliştirme, web yazılım, e-ticaret altyapısı, işletmeye özel yazılım ve yapay zeka modelleri.",
+    "BAI Technology'nin hizmetleri: mobil uygulama geliştirme, web geliştirme, özel yazılım, e-ticaret altyapısı ve yapay zeka modelleri.",
   path: "/hizmetler",
 })
 
@@ -79,9 +79,9 @@ export default function HizmetlerPage() {
       <section className="pb-24 md:pb-32">
         <div className="wrap">
           <div className="mb-10 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
+            <h2 className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
               — Sıkça Sorulan Sorular
-            </span>
+            </h2>
             <span className="hidden h-px w-10 bg-rule sm:block" />
           </div>
           <div className="max-w-3xl divide-y divide-rule border-y border-rule">

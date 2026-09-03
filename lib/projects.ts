@@ -174,8 +174,8 @@ export const projects: Project[] = [
     id: "case-02",
     slug: "bukira",
     category: "Randevu & Yönetim",
-    status: "Yakında",
-    statusTone: "soon",
+    status: "Aktif / Yayında",
+    statusTone: "live",
     title: "Bukira",
     subtitle: "Randevuyla Çalışan İşletmeler için Randevu ve Yönetim Platformu",
     metaDescription:
@@ -183,7 +183,7 @@ export const projects: Project[] = [
     body: [
       "Bukira, randevuyla çalışan işletmeler için geliştirilen bir randevu ve işletme yönetim platformudur. İşletmeler; randevu takvimini, müşteri kayıtlarını, hizmet tanımlarını ve personel programını tek bir mobil uygulama üzerinden yönetebilir.",
       "Uygulama, gün içi akışı takvim üzerinden görünür kılar: randevular saat bazında listelenir, personele ve duruma (onaylı, bekliyor) göre filtrelenebilir. Müşteri geçmişi ve hizmet tanımları aynı sistemde tutulur; böylece işletme sahibi dağınık araçlar yerine tek bir yerden çalışır.",
-      "Bukira, farklı hizmet sektörlerinin ortak ihtiyaçlarını temel alır ve şu anda yayına hazırlanmaktadır.",
+      "Bukira, farklı hizmet sektörlerinin ortak ihtiyaçlarını temel alır; iOS ve Android platformlarında yayındadır.",
     ],
     bullets: [
       "Haftalık ve günlük randevu takvimi",
@@ -191,11 +191,15 @@ export const projects: Project[] = [
       "Müşteri kayıtları ve geçmiş takibi",
       "Hizmet tanımları ve süre yönetimi",
     ],
-    note: "Durum: Yayına hazırlanıyor",
+    note: "Durum: iOS ve Android platformlarında aktif olarak yayında",
     meta: [
       { label: "Alan", value: "Randevu · Yönetim" },
       { label: "Platform", value: "iOS · Android" },
     ],
+    storeLinks: {
+      appStore: "https://apps.apple.com/tr/app/bukira/id6789983975?l=tr",
+      playStore: "https://play.google.com/store/apps/details?id=com.bukira.admin",
+    },
     webUrl: "https://bukira.com.tr",
     structuredData: {
       "@context": "https://schema.org",
@@ -210,9 +214,18 @@ export const projects: Project[] = [
       image: `${BASE_URL}/bai-logo-512.png`,
       url: `${BASE_URL}/projeler/bukira`,
       inLanguage: "tr-TR",
+      installUrl: [
+        "https://apps.apple.com/tr/app/bukira/id6789983975?l=tr",
+        "https://play.google.com/store/apps/details?id=com.bukira.admin",
+      ],
+      downloadUrl: [
+        "https://apps.apple.com/tr/app/bukira/id6789983975?l=tr",
+        "https://play.google.com/store/apps/details?id=com.bukira.admin",
+      ],
       offers: {
         "@type": "Offer",
-        availability: "https://schema.org/PreOrder",
+        availability: "https://schema.org/InStock",
+        seller: { "@id": `${BASE_URL}/#organization` },
       },
       featureList: [
         "Haftalık ve günlük randevu takvimi",
@@ -224,6 +237,7 @@ export const projects: Project[] = [
         "@type": "BusinessAudience",
         audienceType: "Randevuyla çalışan hizmet işletmeleri",
       },
+      releaseNotes: "iOS ve Android platformlarında aktif olarak yayında.",
       publisher: { "@id": `${BASE_URL}/#organization` },
       creator: { "@id": `${BASE_URL}/#organization` },
     },

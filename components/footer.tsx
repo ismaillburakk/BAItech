@@ -54,8 +54,8 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-6 text-[15px] leading-relaxed text-ink-2">
-              İşletmenizin geleceğini yapay zeka ile şekillendiriyoruz. Verimliliği artıran,
-              maliyetleri düşüren AI çözümleri.
+              BAI Technology; mobil uygulama, web ve işletmeye özel yazılım geliştirir. Görüntü
+              ve dil tabanlı yapay zeka modellerini hazır servis kullanmadan kendisi eğitir.
             </p>
           </div>
 

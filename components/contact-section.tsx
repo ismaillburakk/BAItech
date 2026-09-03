@@ -104,7 +104,7 @@ export function ContactSection({
                 <span className="italic-amber">geçin.</span>
               </Heading>
               <p className="mt-6 max-w-md text-[16px] leading-relaxed text-ink-2">
-                AI çözümlerimiz hakkında daha fazla bilgi almak için bizimle iletişime geçin.
+                Yazılım ve yapay zeka projeleriniz için bizimle iletişime geçin.
               </p>
 
               <address className="mt-10 grid grid-cols-1 gap-6 not-italic sm:grid-cols-2 lg:grid-cols-1">
