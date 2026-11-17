@@ -1,0 +1,95 @@
+rules_version = '2';
+
+// =====================================================================
+// Firestore Güvenlik Kuralları — BAI Teknoloji
+// ---------------------------------------------------------------------
+// - İçerik koleksiyonları herkese AÇIK okunur (public site bunları SSR'da
+//   Admin SDK ile çeker; client okuması da zararsız), yazma YALNIZCA
+//   `admin: true` custom claim'i taşıyan oturuma aittir. Firebase Auth'ta
+//   kayıtlı olmak tek başına yetki VERMEZ. Claim, scripts/set-admin-claim.mjs
+//   ile atanır.
+// - submissions: iletişim formu herkes tarafından OLUŞTURULABİLİR, ancak
+//   yalnızca beklenen şemayla; okuma/güncelleme/silme yalnızca admin.
+// - Eşleşmeyen her yol varsayılan olarak KAPALIDIR.
+//
+// Dağıtım: `npm run deploy-rules` (Admin SDK ile) veya Firebase Console.
+// =====================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function isString(value, minLen, maxLen) {
+      return value is string && value.size() >= minLen && value.size() <= maxLen;
+    }
+
+    // ------------- Public içerik koleksiyonları -------------
+    match /projects/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /services/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /references/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /faq/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /hero/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /teamMembers/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /pages/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /siteSettings/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ------------- İletişim formu kayıtları -------------
+    match /submissions/{id} {
+      allow create: if
+        request.resource.data.keys().hasAll(
+          ['name', 'email', 'subject', 'message', 'consent', 'isRead', 'createdAt']
+        )
+        && request.resource.data.keys().hasOnly(
+          ['name', 'email', 'phone', 'topic', 'subject', 'message', 'consent', 'isRead', 'createdAt']
+        )
+        && isString(request.resource.data.name, 2, 120)
+        && isString(request.resource.data.email, 5, 200)
+        && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+        && (
+          !('phone' in request.resource.data)
+          || isString(request.resource.data.phone, 7, 30)
+        )
+        && (
+          !('topic' in request.resource.data)
+          || isString(request.resource.data.topic, 1, 80)
+        )
+        && isString(request.resource.data.subject, 1, 200)
+        && isString(request.resource.data.message, 1, 5000)
+        && request.resource.data.consent == true
+        && request.resource.data.isRead == false
+        && request.resource.data.createdAt == request.time;
+
+      allow read, delete: if isAdmin();
+      // Admin yalnızca okundu işaretini değiştirebilir
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead']);
+    }
+  }
+}
