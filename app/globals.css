@@ -1,298 +1,258 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./shadcn.css";
+@import "./tokens.css";
 
-@layer base {
-  html[data-theme="light"] {
-    --bg: oklch(0.985 0.005 80);
-    --bg-elev: oklch(0.97 0.008 70);
-    --paper: oklch(0.99 0.004 80);
-    --ink: oklch(0.18 0.012 60);
-    --ink-2: oklch(0.38 0.012 60);
-    --ink-3: oklch(0.52 0.010 60); /* WCAG AA: bg-elev üstünde de ≥4.5:1 */
-    --rule: oklch(0.88 0.010 60);
-    --rule-2: oklch(0.93 0.008 60);
-    --amber: oklch(0.66 0.155 55);
-    --amber-ink: oklch(0.42 0.13 50);
-    --green: oklch(0.62 0.14 150);
-    --green-ink: oklch(0.42 0.12 150);
-    color-scheme: light;
-  }
-
-  html[data-theme="dark"] {
-    --bg: oklch(0.155 0.012 60);
-    --bg-elev: oklch(0.20 0.014 60);
-    --paper: oklch(0.185 0.013 60);
-    --ink: oklch(0.97 0.008 80);
-    --ink-2: oklch(0.78 0.012 70);
-    --ink-3: oklch(0.64 0.014 60); /* WCAG AA: bg-elev üstünde de ≥4.5:1 */
-    --rule: oklch(0.30 0.014 60);
-    --rule-2: oklch(0.24 0.012 60);
-    --amber: oklch(0.74 0.165 55);
-    --amber-ink: oklch(0.82 0.155 55);
-    --green: oklch(0.76 0.16 150);
-    --green-ink: oklch(0.84 0.15 150);
-    color-scheme: dark;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background-color: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-feature-settings: "ss01", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
-
-  ::selection {
-    background: var(--amber);
-    color: var(--bg);
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--bg);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--rule);
-    border-radius: 999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--ink-3);
+@custom-variant dark (&:is(.dark *));
+/* Hizmet kartları yığını (stack-cards.jsx › STACK_QUERY ile aynı koşul): hareket serbest VE
+   yapışan kart görünür alana sığıyor — geniş ekranda ≥704px, tablet genişliğinde ≥896px yükseklik.
+   Daha kısa ekranlarda kartlar normal liste olarak akar (alt satırlar bir sonraki kartın altında kalmaz). */
+@custom-variant stack {
+  @media (min-width: 80rem) and (min-height: 44rem) and (prefers-reduced-motion: no-preference),
+    (min-width: 48rem) and (min-height: 56rem) and (prefers-reduced-motion: no-preference) {
+    @slot;
   }
 }
 
-@layer components {
-  .wrap {
-    width: 100%;
-    max-width: 1360px;
-    margin-inline: auto;
-    padding-inline: 28px;
+/* JS kapalıyken hizmet kartlarında sekme çalışmaz: yığın kapanır, dört bölüm de başlığıyla açık görünür. */
+@media (scripting: none) {
+  .svc-stick { position: static !important; }
+  .svc-anchor { margin-top: 1.5rem !important; }
+  .svc-tabs { display: none !important; }
+  .svc-panel { display: block !important; margin-top: 2rem; }
+  .svc-panel-title {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 0 0.75rem !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
   }
-  @media (min-width: 768px) {
-    .wrap {
-      padding-inline: 32px;
-    }
-  }
+}
 
-  .display {
-    font-family: var(--font-serif), Georgia, serif;
-    font-weight: 400;
+/* Token → Tailwind eşlemesi (skill: shadcn "Use CSS variables for colors" — @theme inline) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-hover: var(--card-hover);
+  --color-border-strong: var(--border-strong);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
+  --color-band-muted: var(--band-muted);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+
+  /* Spacing: MASTER tablosu (4/8/16/24/32/48/64) Tailwind'in 4px tabanlı ölçeğiyle
+     birebir örtüşür (1/2/4/6/8/12/16). --spacing-md gibi adlar v4'te max-w-md ile
+     çakıştığı için @theme'e eşlenmez; CSS değişkeni olarak tokens.css'te durur. */
+
+  --container-site: var(--container-max);
+
+  --ease-standard: var(--ease-standard);
+  --default-transition-duration: var(--dur-fast);
+  --default-transition-timing-function: var(--ease-standard);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem; /* MASTER: içerik sabit navbar'ın altında kalmaz */
+    background: var(--background);
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
     letter-spacing: -0.01em;
-    line-height: 0.98;
-    text-wrap: balance;
+    text-wrap: balance; /* ux: heading-line-balance */
   }
-
-  .italic-amber {
-    font-style: italic;
-    color: var(--amber-ink);
+  p {
+    text-wrap: pretty;
   }
-
-  .rule {
-    height: 1px;
-    background: var(--rule);
-    width: 100%;
+  a,
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  summary {
+    cursor: pointer; /* MASTER: cursor-pointer on all clickable elements */
+    touch-action: manipulation;
   }
-
-  .rule-dashed {
-    border-top: 1px dashed var(--rule-2);
-  }
-
-  /* Gallery track — hide scrollbars while keeping horizontal swipe/scroll */
-  .gallery-track {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .gallery-track::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Striped gradient placeholder used for case-study images */
-  .striped {
-    background: repeating-linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--ink) 6%, transparent) 0px,
-      color-mix(in oklch, var(--ink) 6%, transparent) 1px,
-      transparent 1px,
-      transparent 14px
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--amber) 18%, var(--bg-elev)) 0%,
-      var(--bg-elev) 60%,
-      color-mix(in oklch, var(--ink) 8%, var(--bg-elev)) 100%
-    );
-  }
-
-  /* Reveal on scroll */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.in {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    .reveal,
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-    .animate-spin-slow,
-    .animate-spin-reverse {
-      animation: none !important;
-    }
-  }
-
-  /* Focus ring (theme-aware) */
-  :where(a, button, input, textarea, select):focus-visible {
-    outline: 2px solid var(--amber);
-    outline-offset: 3px;
-    border-radius: 4px;
+  :focus-visible {
+    outline: 2px solid var(--ring); /* anasayfa.md: ≥2px, 3:1 odak göstergesi */
+    outline-offset: 2px;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--container-max);
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+  .measure {
+    max-width: var(--measure);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Teknik ızgara zemini — radyal maske ile kenarlarda kaybolur */
+  .bg-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 40%, transparent 100%);
+  }
+  .text-gradient {
+    background: linear-gradient(100deg, var(--foreground) 10%, var(--brand-ink) 60%, var(--brand) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glass {
+    background: color-mix(in oklab, var(--card) 72%, transparent);
+    backdrop-filter: blur(14px);
   }
 }
 
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* Yasal metinler (Markdown gövdesi) — koyu tema tipografisi */
 @layer components {
-  /* Long-form legal/policy prose */
-  .legal-body {
-    color: var(--ink-2);
-    font-size: 15.5px;
-    line-height: 1.7;
+  .prose-legal {
+    max-width: var(--measure);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--muted-foreground);
   }
-  .legal-body > * + * {
-    margin-top: 1.2em;
-  }
-  .legal-body h2 {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(22px, 2.4vw, 30px);
-    font-weight: 400;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-top: 2.2em;
-    margin-bottom: 0.6em;
-    padding-top: 1.2em;
-    border-top: 1px solid var(--rule);
-  }
-  .legal-body h2:first-child {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 0;
-  }
-  .legal-body h3 {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 16px;
+  .prose-legal h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
     font-weight: 600;
-    color: var(--ink);
-    margin-top: 1.6em;
-    margin-bottom: 0.4em;
+    line-height: 1.3;
+    color: var(--foreground);
   }
-  .legal-body p {
-    color: var(--ink-2);
+  .prose-legal h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--foreground);
   }
-  .legal-body strong {
-    color: var(--ink);
+  .prose-legal p {
+    margin-top: 1rem;
+  }
+  .prose-legal ul {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-legal li::marker {
+    color: var(--brand);
+  }
+  .prose-legal strong {
+    color: var(--foreground);
     font-weight: 600;
   }
-  .legal-body a {
-    color: var(--amber-ink);
+  .prose-legal a {
+    color: var(--brand-ink);
     text-decoration: underline;
-    text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+    overflow-wrap: anywhere;
   }
-  .legal-body a:hover {
-    color: var(--ink);
-  }
-  .legal-body ul,
-  .legal-body ol {
-    padding-left: 1.4em;
-    color: var(--ink-2);
-  }
-  .legal-body ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  .legal-body ul > li {
-    position: relative;
-    padding-left: 1.5em;
-  }
-  .legal-body ul > li::before {
-    content: "—";
-    position: absolute;
-    left: 0;
-    color: var(--ink-3);
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 13px;
-  }
-  .legal-body ol {
-    list-style: decimal;
-  }
-  .legal-body li + li {
-    margin-top: 0.5em;
-  }
-  /* Dar ekranlarda tablo taşmasın: sarmalayıcı yatay kayar, sayfa gövdesi taşmaz.
-     Masaüstünde tablo width:100% ile tam genişlikte kalır (görünüm değişmez). */
-  .legal-body .table-scroll {
-    margin: 1.4em 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .legal-body table {
-    width: 100%;
-    min-width: 30rem;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  .legal-body th,
-  .legal-body td {
-    text-align: left;
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--rule-2);
-    vertical-align: top;
-  }
-  .legal-body th {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    font-weight: 400;
-    border-bottom: 1px solid var(--rule);
-  }
-  .legal-body td {
-    color: var(--ink-2);
-  }
-  .legal-body td:first-child {
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .legal-body .note {
-    border-left: 2px solid var(--amber);
-    padding: 0.8em 1.2em;
-    background: var(--bg-elev);
-    border-radius: 0 8px 8px 0;
-    color: var(--ink-2);
-    font-size: 14.5px;
-  }
+}
+
+/* SSS akordeonu (<details>) — 200 ms yükseklik geçişi, destekleyen tarayıcılarda */
+.faq-details {
+  interpolate-size: allow-keywords;
+}
+.faq-details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size var(--dur-base) var(--ease-standard),
+    content-visibility var(--dur-base) var(--ease-standard) allow-discrete;
+}
+.faq-details[open]::details-content {
+  block-size: auto;
 }

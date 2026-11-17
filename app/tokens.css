@@ -1,0 +1,110 @@
+/*
+ * BAI Teknoloji — Tasarım token'ları (v2 · "Koyu teknoloji")
+ * Kaynak: design-system/bai/MASTER.md › "BAI Marka Uyarlaması — v2"
+ *
+ * Renk: logodan türetildi — lacivert #0C2448 · turuncu #F08418 · yeşil #247848.
+ * Tek tema (koyu). Spacing: MASTER Density 4/10. Motion: tek eğri + 150/200/300 ms + 40 ms.
+ *
+ * scripts/contrast-test.mjs bu dosyayı parse eder — renk token'ları tek satırda düz hex.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Yüzeyler ---- */
+  --background: #050b18;
+  --foreground: #eef2f8;
+  --card: #0a1730;
+  --card-hover: #0f2142;
+  --card-foreground: #eef2f8;
+  --popover: #0a1730;
+  --popover-foreground: #eef2f8;
+  --band: #0c2448;
+  --band-foreground: #eef2f8;
+  --band-muted: #b4c0d4;
+
+  /* ---- Eylem ---- */
+  --primary: #f08418;
+  --primary-foreground: #050b18;
+  --secondary: #13284d;
+  --secondary-foreground: #eef2f8;
+  --accent: #12264a;
+  --accent-foreground: #eef2f8;
+  --muted: #0d1c38;
+  --muted-foreground: #9aa8bf;
+
+  /* ---- Marka ---- */
+  --brand: #f08418;
+  --brand-foreground: #050b18;
+  --brand-ink: #f6a04a;
+  --brand-soft: #2a1a0b;
+
+  /* ---- Durum ---- */
+  --success: #4fd18b;
+  --success-soft: #0d2a20;
+  --destructive: #f87171;
+  --destructive-foreground: #050b18;
+
+  /* ---- Çizgi & odak ---- */
+  --border: #1a2c4e;
+  --border-strong: #2a4470;
+  --input: #5b7397;
+  --ring: #f6a04a;
+
+  /* shadcn'in beklediği ama kullanılmayan roller */
+  --chart-1: #f08418;
+  --chart-2: #4fd18b;
+  --chart-3: #8db4e8;
+  --chart-4: #9aa8bf;
+  --chart-5: #f6a04a;
+  --sidebar: #0a1730;
+  --sidebar-foreground: #eef2f8;
+  --sidebar-primary: #f08418;
+  --sidebar-primary-foreground: #050b18;
+  --sidebar-accent: #12264a;
+  --sidebar-accent-foreground: #eef2f8;
+  --sidebar-border: #1a2c4e;
+  --sidebar-ring: #f6a04a;
+
+  /* Dekoratif ışıma (metin taşımaz, kontrast testine girmez) */
+  --glow: rgba(240, 132, 24, 0.22);
+  --glow-strong: rgba(240, 132, 24, 0.45);
+  --grid-line: rgba(141, 180, 232, 0.07);
+
+  /* ---- Radius ---- */
+  --radius: 0.75rem; /* kart 16px (bento, sayfa kuralı projeler.md) */
+
+  /* ---- Spacing (MASTER Density 4/10) ---- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --container-max: 80rem;
+  --measure: 68ch;
+
+  /* ---- Shadow ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.55);
+
+  /* ---- Motion ---- */
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --stagger: 40ms;
+  --marquee-duration: 40s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --stagger: 0ms;
+  }
+}

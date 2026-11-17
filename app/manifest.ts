@@ -1,20 +1,18 @@
-import type { MetadataRoute } from "next"
+import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "BAI Technology - Yapay Zeka ve Özel Yazılım Çözümleri",
-    short_name: "BAI Technology",
-    description: "Yapay zeka destekli özel yazılım çözümleri. ChatEKG, GymBot, web ve mobil yönetim sistemleri.",
+    name: "BAI Technology — Yazılım ve Yapay Zeka",
+    short_name: "BAI",
+    description: "BAI Technology (BAI Teknoloji): mobil uygulama, web, özel yazılım ve kendi eğittiği yapay zeka modelleri.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f7f4ee",
-    theme_color: "#f7f4ee",
+    background_color: "#050b18",
+    theme_color: "#050b18",
+    lang: "tr-TR",
     icons: [
-      {
-        src: "/favicon.png",
-        sizes: "any",
-        type: "image/png",
-      },
+      { src: "/icon.png", sizes: "512x512", type: "image/png" },
+      { src: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
-  }
+  };
 }

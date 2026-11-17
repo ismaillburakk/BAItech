@@ -1,113 +1,125 @@
-import type { Metadata } from "next"
-import { PageCta } from "@/components/page-cta"
-import { ServicesSection } from "@/components/services-section"
-import {
-  BreadcrumbStructuredData,
-  FaqStructuredData,
-  ServicesStructuredData,
-} from "@/components/structured-data"
-import { faqItems } from "@/lib/faq"
-import { pageMetadata } from "@/lib/seo"
+/**
+ * Hizmetler — yapışkan üst üste binen hizmet kartları + genel proje süreci + SSS akordeonu.
+ * Service + FAQPage + BreadcrumbList şemaları.
+ */
+import { ArrowDownIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-// Somut hizmetlerin detayı — süreç, teknoloji ve çıktı odaklı.
-const serviceDetails = [
-  {
-    title: "Mobil Uygulama Geliştirme",
-    body: "iOS ve Android için native mobil uygulamalar geliştiriyoruz. Süreç; ihtiyaç analizi, akış tasarımı, native geliştirme, test ve mağaza yayınından oluşur. Ödeme entegrasyonu, anlık bildirim ve rol tabanlı kullanıcı yapıları proje başında planlanır. Çıktı, App Store ve Google Play'de yayınlanan ve bakımı sürdürülen bir uygulamadır.",
-  },
-  {
-    title: "Web Geliştirme",
-    body: "Kurumsal web sitelerinden çok kullanıcılı yönetim panellerine kadar web yazılımı geliştiriyoruz. Sayfaların önceden oluşturulması, görsel optimizasyonu ve erişilebilirlik ilkeleriyle hızlı, mobil uyumlu ve arama motoru dostu sistemler kurarız. Çıktı; güncellenebilir, ölçeklenen ve gerçek iş akışlarını yürüten bir web uygulamasıdır.",
-  },
-  {
-    title: "E-Ticaret Altyapısı",
-    body: "Markaya özel, tek kiracılı e-ticaret altyapıları kuruyoruz. Ürün, kategori, sepet ve ödeme akışı ile sipariş, stok ve kampanya yönetimi tek sistemde birleşir. Modern ödeme entegrasyonları ve sipariş takibi standarttır. Çıktı, kendi alan adı ve temasıyla çalışan bağımsız bir online mağazadır.",
-  },
-  {
-    title: "Yapay Zeka Modelleri",
-    body: "Hazır servisleri kullanmakla yetinmiyor, görüntü işleme ve doğal dil işleme üzerine kendi modellerimizi eğitiyoruz. Veri hazırlama, model eğitimi, doğruluk ölçümü ve ürüne güvenli entegrasyon sürecin adımlarıdır. Sağlık gibi hassas alanlarda kararın dayanağını gösteren açıklanabilir yapay zeka (XAI) yaklaşımını benimseriz.",
-  },
-  {
-    title: "Özel Yazılım",
-    body: "Hazır paketlerin çözemediği ihtiyaçlar için talebe özel yazılım geliştiriyoruz. Süreci yerinde inceler, çalışan bir ilk sürümü hızla ortaya koyar, kullanıcı geri bildirimiyle geliştiririz. Web ve mobil taraflar birlikte kurgulanır. Çıktı, ekibin gerçekten kullandığı ve zamanla gelişen bir sistemdir.",
-  },
-]
+import { Reveal } from "@/components/motion/reveal";
+import FaqAccordion from "@/components/origin/comp-345";
+import { StackCards } from "@/components/services/stack-cards";
+import { FinalCta } from "@/components/site/final-cta";
+import JsonLd from "@/components/site/json-ld";
+import { PageHeader } from "@/components/site/page-header";
+import { SectionHeading } from "@/components/site/section-heading";
+import { getFaq, getPage, getProjects, getServices, getSiteSettings } from "@/lib/db/public";
+import { pageCards, pageText } from "@/lib/page-schemas";
+import { buildMetadata, faqJsonLd, servicesJsonLd, webPageJsonLd } from "@/lib/seo";
+import { ServiceIcon } from "@/lib/services-ui";
+import { pad2 } from "@/lib/utils";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Yazılım ve Yapay Zeka Hizmetleri",
-  description:
-    "BAI Technology'nin hizmetleri: mobil uygulama geliştirme, web geliştirme, özel yazılım, e-ticaret altyapısı ve yapay zeka modelleri.",
-  path: "/hizmetler",
-})
+export const revalidate = 300;
 
-export default function HizmetlerPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const [settings, page] = await Promise.all([getSiteSettings(), getPage("hizmetler")]);
+  return buildMetadata({
+    title: page?.seo.title || "",
+    description: page?.seo.description || "",
+    path: "/hizmetler",
+    settings,
+  });
+}
+
+export default async function ServicesPage() {
+  const [settings, page, services, faq, projects] = await Promise.all([getSiteSettings(), getPage("hizmetler"), getServices(), getFaq(), getProjects()]);
+  const t = (key: string) => pageText(page, key);
+  const work = pageCards(page, "workSteps").filter((w) => w.title && w.body);
+
   return (
     <>
-      <ServicesStructuredData />
-      <FaqStructuredData />
-      <BreadcrumbStructuredData
-        items={[
-          { name: "Ana Sayfa", path: "/" },
-          { name: "Hizmetler", path: "/hizmetler" },
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: "/hizmetler",
+            name: t("headerTitle"),
+            description: page?.seo.description || "",
+            breadcrumb: [
+              { name: "Ana Sayfa", path: "/" },
+              { name: t("headerEyebrow") || "Hizmetler", path: "/hizmetler" },
+            ],
+          }),
+          ...servicesJsonLd(services),
+          ...(faq.length ? [faqJsonLd(faq, "/hizmetler")] : []),
         ]}
       />
-      <ServicesSection headingAs="h1" cardHeadingAs="h2" />
+      <PageHeader eyebrow={t("headerEyebrow")} title={t("headerTitle")} description={t("headerDescription")}>
+        <nav aria-label="Hizmetler" className="mt-10 flex flex-wrap gap-2">
+          {services.map((s) => {
+            return (
+              <Link
+                key={s.id}
+                href={`#${s.slug}`}
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm font-medium transition-colors duration-(--dur-fast) hover:border-brand hover:text-brand-ink"
+              >
+                <ServiceIcon name={s.icon} className="size-4 text-brand-ink" aria-hidden="true" />
+                {s.title}
+                <ArrowDownIcon
+                  className="size-3.5 text-muted-foreground transition-transform duration-(--dur-fast) group-hover:translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </Link>
+            );
+          })}
+        </nav>
+      </PageHeader>
 
-      {/* Hizmet detayları — süreç, teknoloji, çıktı */}
-      <section className="pb-16 md:pb-24">
-        <div className="wrap">
-          <div className="mb-10 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
-              — Hizmet Detayları
-            </span>
-            <span className="hidden h-px w-10 bg-rule sm:block" />
-          </div>
-          <div className="max-w-3xl divide-y divide-rule border-y border-rule">
-            {serviceDetails.map((s) => (
-              <div key={s.title} className="reveal py-8">
-                <h2 className="font-serif text-[clamp(24px,3vw,32px)] leading-tight text-ink">
-                  {s.title}
-                </h2>
-                <p className="mt-4 text-[15px] leading-relaxed text-ink-2">{s.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="container-site py-24">
+        <StackCards
+          services={services}
+          projects={projects.map(({ slug, title, services: related }) => ({ slug, title, services: related ?? [] }))}
+          labels={{
+            audience: t("audienceLabel") || "Kime uygun",
+            deliverables: t("deliverablesLabel") || "Ne teslim ediyoruz",
+            process: t("processLabel") || "Süreç",
+            start: t("startLabel") || "Nasıl başlanır",
+          }}
+        />
       </section>
 
-      {/* Sıkça Sorulan Sorular — native accordion + FAQPage şeması aynı kaynaktan */}
-      <section className="pb-24 md:pb-32">
-        <div className="wrap">
-          <div className="mb-10 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <h2 className="font-mono text-[11px] uppercase tracking-mono text-ink-3">
-              — Sıkça Sorulan Sorular
-            </h2>
-            <span className="hidden h-px w-10 bg-rule sm:block" />
+      {/* Genel proje süreci — kartların altında, SSS'nin üstünde (Hakkımızda › Ar-Ge bölümüyle aynı kalıp) */}
+      {work.length ? (
+        <section aria-labelledby="surec" className="container-site grid gap-12 pt-4 pb-28 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <SectionHeading eyebrow={t("workEyebrow")} title={<span id="surec">{t("workTitle") || "Süreç"}</span>} />
           </div>
-          <div className="max-w-3xl divide-y divide-rule border-y border-rule">
-            {faqItems.map((f) => (
-              <details key={f.question} className="group py-5">
-                {/* -my-5 py-5: tıklanabilir alan dikeyde 65px'e çıkar (≥44px dokunma
-                    hedefi) ama negatif marj görsel yerleşimi birebir korur. */}
-                <summary className="-my-5 flex cursor-pointer list-none items-center justify-between gap-6 py-5">
-                  <span className="font-serif text-[clamp(18px,2.2vw,23px)] leading-snug text-ink">
-                    {f.question}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="shrink-0 text-[20px] leading-none text-ink-3 transition-transform group-open:rotate-45"
-                  >
-                    +
-                  </span>
-                </summary>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-2">{f.answer}</p>
-              </details>
+          <ol className="divide-y divide-border">
+            {work.map((w, i) => (
+              <Reveal key={w.title} as="li" className="py-10 first:pt-0">
+                <span className="tabular font-heading text-sm text-brand-ink">{pad2(i + 1)}</span>
+                <h3 className="mt-3 font-heading text-2xl font-semibold leading-snug md:text-3xl">{w.title}</h3>
+                <p className="measure mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">{w.body}</p>
+              </Reveal>
             ))}
-          </div>
-        </div>
-      </section>
+          </ol>
+        </section>
+      ) : null}
 
-      <PageCta />
+      {faq.length ? (
+        <section aria-labelledby="sss" className="border-t border-border bg-card/40 py-28">
+          <div className="container-site grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <SectionHeading eyebrow={t("faqEyebrow")} title={<span id="sss">{t("faqTitle")}</span>} />
+              <Reveal className="mt-5 text-muted-foreground">{faq.length} soru</Reveal>
+            </div>
+            <Reveal>
+              <FaqAccordion items={faq} />
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+      <FinalCta settings={settings} />
     </>
-  )
+  );
 }

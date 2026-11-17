@@ -1,22 +1,24 @@
-# Netlify yapılandırması — BAI Technology (Next.js 14 App Router)
-# Next.js Runtime (@netlify/plugin-nextjs) SSR, API route'larını (Netlify
-# Functions) ve next/image optimizasyonunu (Netlify Image CDN) yönetir.
+# Netlify yapılandırması — BAI Teknoloji (Next.js 16 App Router)
+# @netlify/plugin-nextjs (OpenNext adaptörü): SSR/ISR sayfaları ve API
+# route'ları Netlify Functions (Node.js) olarak çalışır; on-demand
+# revalidate (panel kaydı → /api/admin/revalidate) Netlify cache'ini temizler.
+# Görseller Cloudinary'den (custom loader) — Netlify Image CDN kullanılmaz.
 
 [build]
   command = "npm run build"
   publish = ".next"
 
 [build.environment]
-  # Next 14.2 için güvenli LTS. Node 18 EOL olduğundan 20'ye sabitlendi.
   NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Güvenlik header'ları — tüm rotalara uygulanır.
-# CSP bilinçli olarak EKLENMEDİ: GTranslate (Google Translate) ve inline
-# script/font yüklemesi nedeniyle test edilmeden eklenirse site kırılabilir.
-# CSP eklenecekse Report-Only ile başlanmalı.
+# Güvenlik header'ları — tüm rotalar.
+# CSP bilinçli olarak EKLENMEDİ (Firebase Auth/Firestore, Cloudinary
+# upload ve Next inline script'leri test edilmeden kısıtlanırsa panel
+# ve form kırılabilir). Eklenecekse Report-Only ile başlanmalı.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -24,4 +26,18 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    X-DNS-Prefetch-Control = "on"
+
+# Yönetim paneli ve API asla önbelleğe alınmaz / indekslenmez
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "no-store"

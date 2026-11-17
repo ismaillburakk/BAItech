@@ -1,29 +1,46 @@
-import type { Metadata } from "next"
-import { ProjectsSection } from "@/components/projects-section"
-import {
-  BreadcrumbStructuredData,
-  ProjectsListStructuredData,
-} from "@/components/structured-data"
-import { pageMetadata } from "@/lib/seo"
+/** Projeler — bento ızgara + layout animasyonlu filtre. CollectionPage + ItemList şeması. */
+import type { Metadata } from "next";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Projeler ve Ürünler",
-  description:
-    "App Store ve Google Play'de yayında ürünler dahil BAI Technology projeleri: Baseline, GymBot, Dukan, Bukira, ChatEKG ve işletmeye özel yazılımlar.",
-  path: "/projeler",
-})
+import { ProjectFilterGrid } from "@/components/project/project-filter-grid";
+import { FinalCta } from "@/components/site/final-cta";
+import JsonLd from "@/components/site/json-ld";
+import { PageHeader } from "@/components/site/page-header";
+import { getPage, getProjects, getSiteSettings } from "@/lib/db/public";
+import { pageText } from "@/lib/page-schemas";
+import { buildMetadata, projectsItemListJsonLd, webPageJsonLd } from "@/lib/seo";
 
-export default function ProjelerPage() {
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [settings, page] = await Promise.all([getSiteSettings(), getPage("projeler")]);
+  return buildMetadata({ title: page?.seo.title || "", description: page?.seo.description || "", path: "/projeler", settings });
+}
+
+export default async function ProjectsPage() {
+  const [settings, page, projects] = await Promise.all([getSiteSettings(), getPage("projeler"), getProjects()]);
+  const t = (key: string) => pageText(page, key);
   return (
     <>
-      <ProjectsListStructuredData />
-      <BreadcrumbStructuredData
-        items={[
-          { name: "Ana Sayfa", path: "/" },
-          { name: "Projeler", path: "/projeler" },
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            type: "CollectionPage",
+            path: "/projeler",
+            name: t("headerTitle"),
+            description: page?.seo.description || "",
+            breadcrumb: [
+              { name: "Ana Sayfa", path: "/" },
+              { name: t("headerEyebrow") || "Projeler", path: "/projeler" },
+            ],
+          }),
+          projectsItemListJsonLd(projects, t("headerTitle") || "Projeler"),
         ]}
       />
-      <ProjectsSection variant="grid" headingAs="h1" />
+      <PageHeader eyebrow={t("headerEyebrow")} title={t("headerTitle")} description={t("headerDescription")} />
+      <section className="container-site py-16 md:py-20">
+        <ProjectFilterGrid projects={projects} />
+      </section>
+      <FinalCta settings={settings} />
     </>
-  )
+  );
 }

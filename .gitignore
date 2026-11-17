@@ -1,7 +1,13 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+/test-results
+/playwright-report
+/tests/screenshots
 
 # next.js
 /.next/
@@ -10,25 +16,38 @@
 # production
 /build
 
+# netlify
+.netlify
+
+# misc
+.DS_Store
+*.pem
+
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env dosyaları — gizli anahtarlar repoya ASLA girmez
+# (.env* hepsini kapsar; yalnızca belgeleme şablonu izlenir)
 .env*
-# ...ama örnek şablon izlensin (gerçek değer içermez, belgeleme amaçlı)
 !.env.example
 
-# vercel
-.vercel
+# Tasarım taslağı — referans amaçlı yerel klasör (kendi lockfile'ı var;
+# repoda tek lockfile kalsın diye izlenmez)
+/taslak/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
-# lock files (to avoid conflicts)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Firebase service account dosyaları (asla commit edilmez)
+*serviceAccount*.json
+*-firebase-adminsdk-*.json
+
+# schema.org sözlük önbelleği (tests/schema-vocab.mjs)
+tests/.cache
+
+# İç notlar (rakip analizi, içerik planı, uygulama raporları) — depo herkese açık olduğu için izlenmez
+/docs/icerik-plani/
