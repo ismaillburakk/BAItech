@@ -9,6 +9,7 @@
 import "server-only";
 
 import { cache } from "react";
+import type { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebase-admin";
 import {
   COLLECTIONS,
@@ -37,13 +38,13 @@ function toPlain(value: unknown): unknown {
   return out;
 }
 
-function plainDoc<T>(id: string, data: FirebaseFirestore.DocumentData): T {
+function plainDoc<T>(id: string, data: DocumentData): T {
   return { id, ...(toPlain(data) as Record<string, unknown>) } as T;
 }
 
 async function orderedCollection<T>(name: string): Promise<T[]> {
   const snapshot = await adminDb.collection(name).orderBy("order", "asc").get();
-  return snapshot.docs.map((d) => plainDoc<T>(d.id, d.data()));
+  return snapshot.docs.map((d: QueryDocumentSnapshot) => plainDoc<T>(d.id, d.data()));
 }
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {

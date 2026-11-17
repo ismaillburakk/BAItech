@@ -9,7 +9,9 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # firebase-admin 14 ve @google-cloud/firestore 9 Node >=22 ister. Node 20'de npm, firebase-admin'in
+  # isteğe bağlı bağımlılığı olan @google-cloud/firestore'u sessizce atlıyor; build tip kontrolünde düşüyordu.
+  NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]

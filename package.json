@@ -17,6 +17,7 @@
     "test:design": "node tests/compare-design.mjs"
   },
   "dependencies": {
+    "@google-cloud/firestore": "^9.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^12.16.0",
@@ -49,6 +50,6 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22"
   }
 }

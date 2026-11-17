@@ -8,7 +8,7 @@
  *   3) Daha önce bildirilmemiş olmalı (notifiedAt kilidi).
  * Yanıt daima sade `{ ok: true }` — iç durum sızdırılmaz.
  */
-import { FieldValue } from "firebase-admin/firestore";
+import { FieldValue, type Transaction } from "firebase-admin/firestore";
 import { NextResponse, type NextRequest } from "next/server";
 import { adminDb } from "@/lib/firebase-admin";
 import { getSiteSettings } from "@/lib/db/public";
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
   try {
     const docRef = adminDb.collection(COLLECTIONS.submissions).doc(id);
     // Kilit transaction içinde: eşzamanlı iki istek aynı kaydı iki kez mailleyemez
-    const data = await adminDb.runTransaction(async (tx) => {
+    const data = await adminDb.runTransaction(async (tx: Transaction) => {
       const snapshot = await tx.get(docRef);
       if (!snapshot.exists) return null;
       const value = snapshot.data() as FirestoreDoc<Submission> & { notifyLock?: unknown };
