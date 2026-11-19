@@ -427,6 +427,10 @@ export const DEFAULT_OFFICIAL_PROFILES: readonly string[] = [
   "https://apps.apple.com/tr/developer/bai-teknoloji-sanayi-ve-ticaret-ltd-%C5%9Fti/id1893507166",
   "https://play.google.com/store/apps/dev?id=8007462759594152372",
   "https://bukira.com.tr",
+  "https://www.linkedin.com/company/bai-teknoloji/",
+  "https://www.instagram.com/baitechnology/",
+  // Google İşletme Profili — share.google kısa bağlantısının vardığı kalıcı kgmid adresi
+  "https://www.google.com/search?kgmid=/g/11zc_m6755",
 ] as const;
 
 export interface SiteSettings {

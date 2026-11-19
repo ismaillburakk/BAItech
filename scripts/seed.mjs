@@ -394,7 +394,10 @@ async function seedSettings() {
         notifyEmail: contact.email,
         ...ICERIK_SETTINGS.contact,
       },
-      socials: [],
+      socials: [
+        { platform: "linkedin", url: "https://www.linkedin.com/company/bai-teknoloji/" },
+        { platform: "instagram", url: "https://www.instagram.com/baitechnology/" },
+      ],
       stats: [
         { value: "", source: "liveApps" },
         { value: "", source: "projects" },
@@ -427,6 +430,15 @@ async function seedSettings() {
           "Bai Tek",
           "BAI Tecnology",
           "BAI Technologies",
+        ],
+        // types/index.ts › DEFAULT_OFFICIAL_PROFILES ile aynı
+        officialProfiles: [
+          "https://apps.apple.com/tr/developer/bai-teknoloji-sanayi-ve-ticaret-ltd-%C5%9Fti/id1893507166",
+          "https://play.google.com/store/apps/dev?id=8007462759594152372",
+          "https://bukira.com.tr",
+          "https://www.linkedin.com/company/bai-teknoloji/",
+          "https://www.instagram.com/baitechnology/",
+          "https://www.google.com/search?kgmid=/g/11zc_m6755",
         ],
         ogImage: og,
       },
