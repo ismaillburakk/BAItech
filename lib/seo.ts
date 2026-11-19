@@ -14,7 +14,7 @@
 import type { Metadata } from "next";
 import { cldUrl } from "@/lib/cloudinary";
 import { stripEm } from "@/lib/utils";
-import { DEFAULT_GEO, type CloudinaryImage, type FaqItem, type GeoPoint, type Project, type Reference, type Service, type SiteSettings } from "@/types";
+import { DEFAULT_GEO, DEFAULT_OFFICIAL_PROFILES, type CloudinaryImage, type FaqItem, type GeoPoint, type Project, type Reference, type Service, type SiteSettings } from "@/types";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://baitech.com.tr").replace(/\/$/, "");
 
@@ -165,8 +165,23 @@ function postalAddress(settings: SiteSettings | null) {
   };
 }
 
+/** Varlık ayrıştırma sabitleri — panel boş/eksik olsa da Organization düğümünde tutarlı kalır */
+const LEGAL_NAME = "BAI Teknoloji Sanayi ve Ticaret Ltd. Şti.";
+const CORE_ALTERNATE_NAMES = ["BAI Teknoloji", "BAI Technology", "BAI Tech"];
+const FOUNDING_DATE = "2025-06";
+const DISAMBIGUATING_DESCRIPTION =
+  "BAI Technology (BAI Teknoloji), Uşak merkezli bir yazılım firmasıdır; mobil uygulama, web ve özel yazılım geliştirir.";
+
+/** Panel yılı kuruluş yılıyla aynıysa ay hassasiyetli tarih; panel tam tarih girdiyse o */
+function foundingDate(year: string | undefined): string {
+  const y = year?.trim();
+  if (!y || FOUNDING_DATE.startsWith(y)) return FOUNDING_DATE;
+  return y;
+}
+
 function sameAs(settings: SiteSettings | null, projects: Project[]): string[] {
   const urls = [
+    ...(settings?.seo.officialProfiles ?? DEFAULT_OFFICIAL_PROFILES),
     ...(settings?.socials ?? []).map((s) => s.url),
     ...projects.flatMap((p) => [p.links?.appStore, p.links?.playStore]),
   ].filter((u): u is string => typeof u === "string" && u.startsWith("http"));
@@ -185,20 +200,22 @@ export function organizationJsonLd(settings: SiteSettings | null, projects: Proj
   const phone = settings?.contact.phone ? schemaPhone(settings.contact.phone) : undefined;
   const email = settings?.contact.email || undefined;
   const geo = geoOf(settings);
-  const legalName = settings?.brand.legalName?.trim();
+  const legalName = settings?.brand.legalName?.trim() || LEGAL_NAME;
+  const alternateName = [...new Set([...CORE_ALTERNATE_NAMES, ...(settings?.seo.alternateNames ?? []).map((n) => n.trim())].filter(Boolean))];
   return {
     "@context": "https://schema.org",
     "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
     "@id": ORG_ID,
     name,
-    ...(legalName ? { legalName } : {}),
-    alternateName: settings?.seo.alternateNames?.filter(Boolean) ?? [],
+    legalName,
+    alternateName,
     url: SITE_URL,
     logo,
     image: logo.url,
     description: settings?.seo.organizationDescription || settings?.seo.defaultDescription,
+    disambiguatingDescription: DISAMBIGUATING_DESCRIPTION,
     slogan: "Yazılım ve yapay zeka",
-    foundingDate: settings?.brand.foundingYear || "2025",
+    foundingDate: foundingDate(settings?.brand.foundingYear),
     foundingLocation: FOUNDING_LOCATION,
     address: postalAddress(settings),
     geo: { "@type": "GeoCoordinates", ...geo },

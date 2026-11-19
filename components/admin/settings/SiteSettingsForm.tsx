@@ -10,7 +10,7 @@ import { hasActiveUploads, UPLOAD_IN_PROGRESS_MESSAGE } from "@/lib/cloudinary";
 import { mapFirestoreError } from "@/lib/db/common";
 import { getSiteSettings, saveSiteSettings, type SiteSettingsInput } from "@/lib/db/singletons";
 import { isSafeUrl, reorder } from "@/lib/utils";
-import { DEFAULT_GEO, STAT_SOURCE_LABELS, STAT_SOURCES, type StatItem } from "@/types";
+import { DEFAULT_GEO, DEFAULT_OFFICIAL_PROFILES, STAT_SOURCE_LABELS, STAT_SOURCES, type StatItem } from "@/types";
 
 const EMPTY: SiteSettingsInput = {
   brand: { name: "BAI Technology", localName: "BAI Teknoloji", logo: null, tagline: "", legalName: "", foundingYear: "2025" },
@@ -18,7 +18,7 @@ const EMPTY: SiteSettingsInput = {
   socials: [],
   stats: [],
   cta: { title: "", buttonLabel: "Ücretsiz Danışmanlık" },
-  seo: { defaultTitle: "", defaultDescription: "", organizationDescription: "", alternateNames: [], ogImage: null },
+  seo: { defaultTitle: "", defaultDescription: "", organizationDescription: "", alternateNames: [], officialProfiles: [...DEFAULT_OFFICIAL_PROFILES], ogImage: null },
 };
 
 function settingsIds(s: SiteSettingsInput): string[] {
@@ -79,6 +79,8 @@ export default function SiteSettingsForm() {
       return setError("Konum koordinatlarını kontrol edin: enlem −90…90, boylam −180…180 arasında ondalık sayı olmalı (örn. 38.6823).");
     const socials = form.socials.filter((s) => s.platform.trim() && s.url.trim());
     if (socials.some((s) => !isSafeUrl(s.url.trim()))) return setError("Sosyal medya bağlantıları http(s) adresi olmalı.");
+    const officialProfiles = (form.seo.officialProfiles ?? []).map((u) => u.trim()).filter(Boolean);
+    if (officialProfiles.some((u) => !isSafeUrl(u))) return setError("Resmi profil bağlantıları http(s) adresi olmalı.");
     setIsSaving(true);
     try {
       const input: SiteSettingsInput = {
@@ -87,7 +89,7 @@ export default function SiteSettingsForm() {
         contact: { ...form.contact, geo: { latitude: geo.latitude, longitude: geo.longitude } },
         socials: socials.map((s) => ({ platform: s.platform.trim().toLowerCase(), url: s.url.trim() })),
         stats: form.stats.filter((s) => s.label.trim()),
-        seo: { ...form.seo, alternateNames: form.seo.alternateNames.map((n) => n.trim()).filter(Boolean) },
+        seo: { ...form.seo, alternateNames: form.seo.alternateNames.map((n) => n.trim()).filter(Boolean), officialProfiles },
       };
       await saveSiteSettings(input);
       await images.commit(settingsIds(input));
@@ -121,7 +123,7 @@ export default function SiteSettingsForm() {
         <Field label="Footer tanıtım cümlesi" wide>
           <textarea rows={3} value={form.brand.tagline} onChange={(e) => setGroup("brand", { tagline: e.target.value })} className={inputClass} />
         </Field>
-        <Field label="Şirket unvanı" wide hint="Footer'da tanıtım cümlesinin altında ve schema legalName alanında görünür. Boşsa gösterilmez.">
+        <Field label="Şirket unvanı" wide hint="Footer'da tanıtım cümlesinin altında ve schema legalName alanında görünür. Boşsa footer'da gösterilmez, schema'da resmi unvan kullanılır.">
           <input type="text" value={form.brand.legalName ?? ""} onChange={(e) => setGroup("brand", { legalName: e.target.value })} className={inputClass} />
         </Field>
         <div className="sm:col-span-2">
@@ -280,6 +282,14 @@ export default function SiteSettingsForm() {
           onChange={(v) => setGroup("seo", { alternateNames: v })}
           addLabel="Varyant ekle"
           hint="Olası yazımlar: BAI Teknoloji, Baı Teknoloji, BAI Tech, Baytek … Meta keywords'e değil, yapılandırılmış veriye girer."
+        />
+        <StringListEditor
+          label="Resmi profiller (schema sameAs)"
+          value={form.seo.officialProfiles ?? []}
+          onChange={(v) => setGroup("seo", { officialProfiles: v })}
+          placeholder="https://"
+          addLabel="Profil ekle"
+          hint="Yalnız yapılandırılmış veriye girer, footer'da görünmez: App Store / Google Play geliştirici sayfaları, ürün siteleri, LinkedIn şirket sayfası, Google İşletme Profili. Yalnız BAI'ye ait, açılan adresler."
         />
         <div className="sm:col-span-2">
           <ImageUploader

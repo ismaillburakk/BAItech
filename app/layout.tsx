@@ -16,6 +16,14 @@ export const metadata: Metadata = {
   creator: "BAI Technology",
   publisher: "BAI Technology",
   formatDetection: { telephone: false, address: false, email: false },
+  // Sabit adresli favicon seti (public/) — BAI amblemi; hash'li app/icon dosya kuralı bilinçli olarak kullanılmıyor
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = {

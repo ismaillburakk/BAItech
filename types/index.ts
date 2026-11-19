@@ -422,6 +422,13 @@ export interface GeoPoint {
 /** Panelde koordinat girilmemişse kullanılan değer (ilk kurulumdaki konum) */
 export const DEFAULT_GEO: GeoPoint = { latitude: 38.6823, longitude: 29.4082 };
 
+/** Doğrulanmış resmi profiller (2026-11) — panelde "Resmi profiller" alanı boş kaydedilmemişse kullanılır */
+export const DEFAULT_OFFICIAL_PROFILES: readonly string[] = [
+  "https://apps.apple.com/tr/developer/bai-teknoloji-sanayi-ve-ticaret-ltd-%C5%9Fti/id1893507166",
+  "https://play.google.com/store/apps/dev?id=8007462759594152372",
+  "https://bukira.com.tr",
+] as const;
+
 export interface SiteSettings {
   id: string;
   brand: {
@@ -466,6 +473,12 @@ export interface SiteSettings {
     organizationDescription: string;
     /** Marka varyantları — schema alternateName */
     alternateNames: string[];
+    /**
+     * Resmi profiller — yalnız schema Organization.sameAs (footer'da görünmez): mağaza geliştirici
+     * sayfaları, ürün siteleri, LinkedIn, Google İşletme Profili … Alan hiç kaydedilmemişse
+     * DEFAULT_OFFICIAL_PROFILES kullanılır.
+     */
+    officialProfiles?: string[];
     /** null → /og-image.png */
     ogImage: CloudinaryImage | null;
   };
